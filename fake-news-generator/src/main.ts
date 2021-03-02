@@ -1,26 +1,3 @@
-// import { registry } from "./lister";
-
-// const syntaxes = [
-//     '{elev} {udsagnsord} {famous} at {place}'
-// ];
-
-// function fillOutSyntax(syntax: string): string {
-//     let newString = syntax;
-//     const allFillIns = syntax.match(/(?<={)(\w+)(?=})/g);
-
-//     allFillIns?.forEach((val: string) => {
-//         const list = registry.get(val);
-//         if(!list) throw new TypeError(`${val} is not a registered list of words`);
-//         newString = newString.replace(`{${val}}`, list[Math.floor(Math.random() * list.length)]);
-//     })
-
-//     return newString;
-// }
-
-// for(let i = 0; i < 10; i++) {
-//     console.log(fillOutSyntax(syntaxes[0]));
-// }
-
 class SportFakeNews {
     syntaxes: string[] = [];
     categorys: Map<string, string[]> = new Map();
