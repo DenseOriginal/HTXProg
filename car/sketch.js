@@ -29,10 +29,13 @@ function draw() {
   mainBil.update();
   mainBil.show();
 
+  // Check keys
   if (keysDown.has('w')) speed += 0.03;
   if (keysDown.has('s')) speed = Math.max(speed - 0.03, 0);
-  speed *= mainBil.isOutideRoad ? 0.95 : 0.9993;
-  speed = constrain(speed, 0, 20);
+
+  // Update speed
+  speed *= mainBil.isOutsideRoad ? 0.95 : 0.9993; // Slow down over time
+  speed = constrain(speed, 0, 20); // Constrain speed between 0 and 20
 
   // Drawing GUI
   translate(-(width / 2), 0);
@@ -51,7 +54,7 @@ class Bil {
     this.y = y;
     this.w = w;
     this.h = h;
-    this.isOutideRoad = false;
+    this.isOutsideRoad = false;
 
     // Posetive = right
     // Negative = left
@@ -69,8 +72,8 @@ class Bil {
     if (keysDown.has('d')) { this.xSpeed = 4; }
 
     // If car is on grass then slow speed
-    this.isOutideRoad = Math.abs(this.x) > roadWidth / 2;
-    if (this.isOutideRoad) this.xSpeed *= 0.25;
+    this.isOutsideRoad = Math.abs(this.x) > roadWidth / 2;
+    if (this.isOutsideRoad) this.xSpeed *= 0.25;
 
     // Prevent car from moveing outside canvas
     this.x = constrain(this.x + this.xSpeed, -(width / 2), width / 2);
