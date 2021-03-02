@@ -23,20 +23,18 @@ class SladderFakeNews {
   }
 }
 
-// Erstat <Kategori> med den kategori i arbejder med
-// For eksempel
-// SladderFakeNews
 // Tobias
+// Hej folk der læser source
 class KlimaFakeNews {
   constructor() {
     this.tag = 'Klima';
   }
   genererHeadline() {
-    const HOOKS = ['BREAKING:', 'NYT:', 'LÆS HER:', 'GODT AT VIDE:', 'KAN DET PASSE?', 'VIGTIGT:'];
-    const INTROS = ['Kuldioxid', 'CO2', 'Brugen af fossile brændstoffer', 'Den globale opvarmning'];
-    const MIDDLES = ['er', 'bliver ved med at være', 'skal nok blive', 'fortsætter med at være', 'stopper ikke med at være'];
-    const OUTROS = ['slem', 'skrækkelig', 'alvorlig', 'utrolig', 'frygtelig', 'et stort problem', 'alt andet end pogchamp'];
-    const ENDINGS = ['Og sådan er det.', '!!!', 'F', 'Og det er skidt', 'Buuhuu, livet er hårdt.', 'It really do be like that sometimes.']
+    const HOOKS = ['BREAKING:', 'NYT:', 'LÆS HER:', 'GODT AT VIDE:', 'KAN DET PASSE?', 'VIGTIGT:', 'NY INFO:', '(IKKE CLICKBAIT)', 'SE SANDHEDEN HER:', 'SE SANDHEDEN NU:'];
+    const INTROS = ['Kuldioxid', 'CO2', 'Brugen af fossile brændstoffer', 'Den globale opvarmning', 'Forandringen af klimaet'];
+    const MIDDLES = ['er', 'bliver ved med at være', 'skal nok blive', 'fortsætter med at være', 'stopper ikke med at være', 'er måske', 'bliver måske', 'kan risikeres at være'];
+    const OUTROS = ['slem', 'skrækkelig', 'alvorlig', 'utrolig', 'frygtelig', 'et stort problem', 'alt andet end pogchamp', 'overhovedet ikke poggers'];
+    const ENDINGS = ['Og sådan er det.', 'F', 'Og det er skidt', 'Buuhuu, livet er hårdt.', 'It really do be like that sometimes.', ' Og det skal der også være plads til']
 
     const HOOK = HOOKS[Math.floor(random(0, HOOKS.length))];
     const INTRO = INTROS[Math.floor(random(0, INTROS.length))];
