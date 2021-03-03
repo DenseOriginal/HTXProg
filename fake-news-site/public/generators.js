@@ -289,14 +289,15 @@ class verdensPolitikFakeNews {
     this.Ugedag = [" mandag", " tirsdag", " onsdag", " torsdag", " fredag", " lørdag", " søndag"]
     this.Tidspunkt2 = [" morgen", " aften",]
 
+    
+  }
+  genererHeadline() {
     this.RandPers1 = round(random(0, 4))
     this.RandPers2 = round(random(0, 6))
     this.RandVerber = round(random(0, 9))
     this.RandTid = round(random(0, 4))
     this.RandUge = round(random(0, 6))
     this.RandTid2 = round(random(0, 1))
-  }
-  genererHeadline() {
     this.a = (this.Personer1[this.RandPers1] + this.Verber[this.RandVerber] + this.Personer2[this.RandPers2] + this.Tidspunkt[this.RandTid] + this.Ugedag[this.RandUge] + this.Tidspunkt2[this.RandTid2]);
 
     return this.a
@@ -319,16 +320,43 @@ class VejretFakeNews {
 
     this.space = " ";
     this.komma = ",";
+  }
 
+  genererHeadline() {
     this.randomTal1 = Math.round(random(0, 6));
     this.randomTal2 = Math.round(random(0, 7));
     this.randomTal3 = Math.round(random(0, 3));
     this.randomTal4 = Math.round(random(0, 7));
-  }
 
-  genererHeadline() {
     this.a = ("BREAKING:" + this.space + this.tider[this.randomTal1] + this.space + this.hændelser[this.randomTal2] + this.komma + this.space + this.begrundelser[this.randomTal3] + this.space + this.mennesker[this.randomTal4]);
     return this.a
   }
 }
 
+// Lovro
+class CoronaFakeNews {
+  constructor() {
+    this.tag = 'Corona'
+    this.sentenceDecider = Math.round(random(0, 1));
+    this.personer = ["Søren Brostrøm", "Eksperter", "Smitte eksperter", "Men-In-Black-medlemmer", "Smittet person", "Vrede demonstranter", "Regeringens ekspertgruppe", "Mette Frederiksen", "Jakob Ellemann-Jensen", "Venstre", "Socialdemokratiet", "Nye Borgerlige", "Veganerpartiet", "Enhedslisten", "Støttepartierne", "Donald Trump"];
+    this.udtalelser = ["siger", "mener", "synes", "tror", "udtaler"];
+    this.emner = ["corona", "vaccinen", "immunforsvar", "isolation"];
+    this.meninger = ["er særligt farlig for", "har positive effekter på", "giver autisme til", "dræber især", "har ingen effekt på"];
+    this.steder = ["Aarhus", "Gellerupparken", "København", "Aalborg", "Danmark", "USA", "Tyskland", "Sverige", "Storbritannien", "Kina", "Europa", "Asien", "Amerika"];
+  }
+  genererHeadline() {
+    this.randNumbyPersoner = Math.round(random(0, 15));
+    this.randNumbyUdtalelser = Math.round(random(0, 4));
+    this.randNumbyEmner = Math.round(random(0, 3));
+    this.randNumbyMeninger = Math.round(random(0, 4));
+    this.randNumbySteder = Math.round(random(0, 12));
+    this.randNumbyTargets = Math.round(random(0, 6));
+    this.procent = Math.round(random(30, 300))
+    this.targets = ["børn", "politikere", "de ældste borgere", this.steder[this.randNumbySteder], "kriminelle", "kristne", "Muslimer"];
+    if (this.sentenceDecider === 1) {
+      return this.personer[this.randNumbyPersoner] + " " + this.udtalelser[this.randNumbyUdtalelser] + " " + this.emner[this.randNumbyEmner] + " " + this.meninger[this.randNumbyMeninger] + " " + this.targets[this.randNumbyTargets];
+    } else {
+      return "Coronatallene er stiegt med" + " " + this.procent + "%";
+    }
+  }
+}

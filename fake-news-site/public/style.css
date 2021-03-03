@@ -12,6 +12,10 @@
 }
 .box-item a,span{color:#FFF;}
 
+a:hover {
+    color: white !important;
+}
+
 .box-item .box-post span.meta {
     font-family:  sans-serif;
     font-size: 12px;
@@ -30,7 +34,7 @@
     bottom: 0;
     width: 100%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.6) 45%, rgba(0, 0, 0, 0) 100%);
-    padding: 30px;
+    padding: 20px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;

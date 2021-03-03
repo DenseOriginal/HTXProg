@@ -22,7 +22,8 @@ const generators = [
     new SladderFakeNews(),
     new KlimaFakeNews(),
     new PolitikFakeNews(),
-    new verdensPolitikFakeNews()
+    new verdensPolitikFakeNews(),
+    new CoronaFakeNews(),
 ];
 
 const randomGen = () => generators[~~(Math.random() * generators.length)];
@@ -43,11 +44,19 @@ window.addEventListener('scroll', () => {
     }
 });
 
+const tagColors = ['#795cb8', '#5c8fb8', '#b05cb8', '#b85c5c', '#b8a75c', '#5CB85C'];
+const tagsToColor = {};
+function getTagColor(tag) {
+  if(tagsToColor[tag]) return tagsToColor[tag];
+  // tagsToColor[tag] = tagColors[~~(Math.random() * tagColors.length)];
+  tagsToColor[tag] = tagColors.pop();
+  return tagsToColor[tag];
+}
 
 function generateHTML(headline, tag) {
     return `<div class="box-item">
     <div class="box-post">
-      <span class="label label-success">
+      <span class="label" style="background-color: ${getTagColor(tag)}">
         <a href="#" rel="tag">${tag}</a>
       </span>
       <h1 class="post-title">
