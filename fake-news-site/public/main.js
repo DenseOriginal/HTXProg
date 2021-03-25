@@ -24,6 +24,7 @@ const generators = [
     new PolitikFakeNews(),
     new verdensPolitikFakeNews(),
     new CoronaFakeNews(),
+    new SportFakeNews(),
 ];
 
 const randomGen = () => generators[~~(Math.random() * generators.length)];

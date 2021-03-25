@@ -289,7 +289,7 @@ class verdensPolitikFakeNews {
     this.Ugedag = [" mandag", " tirsdag", " onsdag", " torsdag", " fredag", " lørdag", " søndag"]
     this.Tidspunkt2 = [" morgen", " aften",]
 
-    
+
   }
   genererHeadline() {
     this.RandPers1 = round(random(0, 4))
@@ -336,27 +336,116 @@ class VejretFakeNews {
 // Lovro
 class CoronaFakeNews {
   constructor() {
-    this.tag = 'Corona'
-    this.sentenceDecider = Math.round(random(0, 1));
-    this.personer = ["Søren Brostrøm", "Eksperter", "Smitte eksperter", "Men-In-Black-medlemmer", "Smittet person", "Vrede demonstranter", "Regeringens ekspertgruppe", "Mette Frederiksen", "Jakob Ellemann-Jensen", "Venstre", "Socialdemokratiet", "Nye Borgerlige", "Veganerpartiet", "Enhedslisten", "Støttepartierne", "Donald Trump"];
-    this.udtalelser = ["siger", "mener", "synes", "tror", "udtaler"];
-    this.emner = ["corona", "vaccinen", "immunforsvar", "isolation"];
-    this.meninger = ["er særligt farlig for", "har positive effekter på", "giver autisme til", "dræber især", "har ingen effekt på"];
-    this.steder = ["Aarhus", "Gellerupparken", "København", "Aalborg", "Danmark", "USA", "Tyskland", "Sverige", "Storbritannien", "Kina", "Europa", "Asien", "Amerika"];
+      this.personer = ["Søren Brostrøm", "Eksperter", "Smitte eksperter", "Men-In-Black-medlemmer", "Smittet person", "Vrede demonstranter", "Regeringens ekspertgruppe", "Mette Frederiksen", "Jakob Ellemann-Jensen", "Venstre", "Socialdemokratiet", "Nye Borgerlige", "Veganerpartiet", "Enhedslisten", "Støttepartierne", "Donald Trump"];
+      this.udtalelser = ["siger","mener","synes", "tror", "udtaler"];
+      this.emner = ["corona", "vaccinen", "immunforsvar", "isolation"];
+      this.meninger = ["er særligt farlig for", "har positive effekter på", "giver autisme til","dræber især", "har ingen effekt på"];
+      this.steder = ["Aarhus", "Gellerupparken", "København", "Aalborg", "Danmark", "USA", "Tyskland", "Sverige", "Storbritannien", "Kina", "Europa", "Asien", "Amerika"];
+      
   }
   genererHeadline() {
-    this.randNumbyPersoner = Math.round(random(0, 15));
-    this.randNumbyUdtalelser = Math.round(random(0, 4));
-    this.randNumbyEmner = Math.round(random(0, 3));
-    this.randNumbyMeninger = Math.round(random(0, 4));
-    this.randNumbySteder = Math.round(random(0, 12));
-    this.randNumbyTargets = Math.round(random(0, 6));
-    this.procent = Math.round(random(30, 300))
-    this.targets = ["børn", "politikere", "de ældste borgere", this.steder[this.randNumbySteder], "kriminelle", "kristne", "Muslimer"];
-    if (this.sentenceDecider === 1) {
-      return this.personer[this.randNumbyPersoner] + " " + this.udtalelser[this.randNumbyUdtalelser] + " " + this.emner[this.randNumbyEmner] + " " + this.meninger[this.randNumbyMeninger] + " " + this.targets[this.randNumbyTargets];
-    } else {
-      return "Coronatallene er stiegt med" + " " + this.procent + "%";
+      this.sentenceDecider = Math.round(random(0, 1));
+      this.randNumbyPersoner = Math.round(random(0, 15));
+      this.randNumbyUdtalelser = Math.round(random(0, 4));
+      this.randNumbyEmner = Math.round(random(0, 3));
+      this.randNumbyMeninger = Math.round(random(0, 4));
+      this.randNumbySteder = Math.round(random(0, 12));
+      this.randNumbyTargets = Math.round(random(0, 6));
+      this.procent = Math.round(random(30, 300))
+      this.targets = ["børn", "politikere", "de ældste borgere", this.steder[this.randNumbySteder], "kriminelle", "kristne", "Muslimer"];
+      if(this.sentenceDecider === 1){
+          return this.personer[this.randNumbyPersoner] + " " + this.udtalelser[this.randNumbyUdtalelser] + " " + this.emner[this.randNumbyEmner] + " " + this.meninger[this.randNumbyMeninger] + " " + this.targets[this.randNumbyTargets];
+      } else {
+          return "Coronatallene er stiegt med" + " " + this.procent + "%" + "i" + " " + this.steder;
+      }
+  }
+}
+
+// Gustav
+class SportFakeNews {
+  constructor() {
+    this.tag = 'Sport'
+
+    //10
+    this.folk = [
+      "Cristiano Ronaldo",
+      "Lebron James",
+      "Lionel Messi",
+      "Neymar",
+      "Conor McGregor",
+      "Roger Federer",
+      "Virat Kohli",
+      "Rafael Nadal",
+      "Mirsad",
+      "min far"
+    ];
+
+    //10
+    this.sport = [
+      "fodbold",
+      "cricket",
+      "hockey",
+      "tennis",
+      "volleyball",
+      "bordfodbold",
+      "basketball",
+      "golf",
+      "svømning",
+      "cykling"
+    ];
+
+    //10
+    this.land = [
+      "Frankrig",
+      "Danmark",
+      "England",
+      "Tyskland",
+      "Belgien",
+      "Brasilien",
+      "Kroatien",
+      "Sverige",
+      "Argentina",
+      "Portugal"
+    ];
+
+    //10
+    this.besejre = [
+      "destruere",
+      "besejre",
+      "ødelægger",
+      "slår",
+      "stikker",
+      "taber til",
+      "slagter",
+      "bliver overvældet af",
+      "vinder over",
+      "dominerer"
+    ];
+
+    
+
+  }
+
+  genererHeadline() {
+    this.sjovtNummer = Math.round(random(1, 3));
+
+    this.r = Math.round(random(0, 9));
+    this.t = Math.round(random(0, 9));
+
+    if (this.t == this.r && this.r < 9) {
+      this.t++
+    }
+
+    if (this.sjovtNummer == 2) {
+      return this.folk[this.r] + " " + this.besejre[this.r] + " " + this.land[this.r] + "s landshold helt alene, efter sit hold var hjemme med ondt i maven";
+    }
+
+    if (this.sjovtNummer == 3) {
+      return this.folk[this.r] + " " + "bliver erkleret verdens bedste til " + this.sport[this.t] + " af sportstjernen " + this.folk[this.t];
+
+    }
+    if (this.sjovtNummer == 1) {
+      return this.land[this.r] + " " + this.besejre[this.r] + " " + this.land[this.t] + " i " + this.sport[this.r];
     }
   }
 }
