@@ -1,5 +1,6 @@
 import { formler } from "./formler";
 import { createInputs, hasKnownBits, keyofValueMap, ValueMap } from "./helpers";
+import "./p5";
 
 createInputs();
 

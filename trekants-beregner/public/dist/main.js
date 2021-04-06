@@ -101,6 +101,7 @@ var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 var formler_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(2);
+__webpack_require__(3);
 helpers_1.createInputs();
 var inputs = __spreadArrays(document.getElementsByClassName('inp')).reduce(function (acc, cur) {
     var id = cur.id;
@@ -126,7 +127,6 @@ function udregn() {
         return;
     }
     while (formulas.length >= 1) {
-        console.log(formulas.length);
         formulas.forEach(function (f) {
             var result = f.calculate(values);
             values[f.returns] = result;
@@ -189,11 +189,12 @@ var inputNames = [
     { name: 'Linje a', id: 'a' },
 ];
 function createInputs() {
+    var inputField = document.getElementById('input-fields');
     inputNames.forEach(function (inp) {
         var html = "<div>\n            <label for=\"" + inp.id + "\">" + inp.name + "</label>\n            <input type=\"number\" id=\"" + inp.id + "\" name=\"" + inp.id + "\" class=\"inp\"/>\n        </div>";
         var div = document.createElement('div');
         div.innerHTML = html.trim();
-        document.body.prepend(div.firstChild);
+        inputField === null || inputField === void 0 ? void 0 : inputField.prepend(div.firstChild);
     });
 }
 exports.createInputs = createInputs;
@@ -306,6 +307,21 @@ function sinusRelations(aLinje, bLinje, aVinkel, bVinkel) {
     ];
 }
 exports.sinusRelations = sinusRelations;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/// <reference path="../node_modules/@types/p5/global.d.ts"/>
+window.setup = function () {
+    createCanvas(windowWidth, windowHeight);
+};
+window.draw = function () {
+    background(255);
+};
 
 
 /***/ })
