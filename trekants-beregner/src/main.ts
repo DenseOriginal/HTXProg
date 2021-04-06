@@ -10,9 +10,7 @@ interface ValueMap<T> {
 type keyofValueMap = keyof ValueMap<any>;
 
 const inputs: ValueMap<HTMLInputElement> = [...document.getElementsByClassName('inp') as any].reduce((acc, cur: HTMLInputElement) => {
-    const { id: _id, name } = cur;
-    const id = _id as keyofValueMap;
-
+    const id = cur.id as keyofValueMap;
     acc[id] = cur;
     return acc;
 }, {});
@@ -24,20 +22,14 @@ function udregn() {
     const values = Object.entries(inputs).reduce((acc, cur) => {
         const [key, elm] = cur as [keyofValueMap, HTMLInputElement];
         const { value } = elm;
-        if(value && !isNaN(value as any)) knownValues++;
-        acc[key] = value as any;
+        if(value) knownValues++;
+        console.log(typeof value);
+        
+        acc[key] = value ? Number(value) : undefined;
 
         return acc;
-    }, {} as ValueMap<number>)    
-}
+    }, {} as ValueMap<number | undefined>);
+    if(knownValues < 3) {console.log('Not enough values'); return;}
 
-function linjeStykkeFactory(vinkel: keyofValueMap, bLinje: keyofValueMap, cLinje: keyofValueMap) {
-    return (inputs: ValueMap<number>) => {
-        const vinkelVal = inputs[vinkel];
-        const bVal = inputs[bLinje];
-        const cVal = inputs[cLinje];
-        return Math.sqrt(bVal**2 + cVal**2 - 2*bVal*cVal*Math.cos(vinkelVal))
-    }
+    
 }
-
-linjeStykkeFactory('A', 'b', 'c');

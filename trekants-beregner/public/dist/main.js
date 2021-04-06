@@ -99,8 +99,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
 };
 var _a;
 var inputs = __spreadArrays(document.getElementsByClassName('inp')).reduce(function (acc, cur) {
-    var _id = cur.id, name = cur.name;
-    var id = _id;
+    var id = cur.id;
     acc[id] = cur;
     return acc;
 }, {});
@@ -110,21 +109,17 @@ function udregn() {
     var values = Object.entries(inputs).reduce(function (acc, cur) {
         var _a = cur, key = _a[0], elm = _a[1];
         var value = elm.value;
-        if (value && !isNaN(value))
+        if (value)
             knownValues++;
-        acc[key] = value;
+        console.log(typeof value);
+        acc[key] = value ? Number(value) : undefined;
         return acc;
     }, {});
+    if (knownValues < 3) {
+        console.log('Not enough values');
+        return;
+    }
 }
-function linjeStykkeFactory(vinkel, bLinje, cLinje) {
-    return function (inputs) {
-        var vinkelVal = inputs[vinkel];
-        var bVal = inputs[bLinje];
-        var cVal = inputs[cLinje];
-        return Math.sqrt(Math.pow(bVal, 2) + Math.pow(cVal, 2) - 2 * bVal * cVal * Math.cos(vinkelVal));
-    };
-}
-linjeStykkeFactory('A', 'b', 'c');
 
 
 /***/ })
