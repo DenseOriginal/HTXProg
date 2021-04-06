@@ -320,7 +320,8 @@ exports.sinusRelations = sinusRelations;
 /// <reference path="../node_modules/@types/p5/global.d.ts"/>
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createInstructions = void 0;
-var instructions = [];
+var helpers_1 = __webpack_require__(2);
+var trekant;
 window.setup = function () {
     createCanvas(windowWidth, windowHeight);
     angleMode(DEGREES);
@@ -328,16 +329,24 @@ window.setup = function () {
 window.draw = function () {
     background(255);
     translate(width / 2, height / 2);
-    instructions.forEach(function (f) { return f(); });
+    // instructions.forEach(f => f());
+    if (trekant) {
+        beginShape();
+        var aX = 0;
+        var aY = 0;
+        vertex(aX, aY);
+        var bX = trekant.a;
+        var bY = 0;
+        vertex(bX, bY);
+        var cX = trekant.c * helpers_1.cos(trekant.B);
+        var cY = trekant.c * -helpers_1.sin(trekant.B);
+        vertex(cX, cY);
+        endShape(CLOSE);
+    }
 };
-function createInstructions(trekant) {
-    instructions.forEach(instructions.pop);
-    instructions.push(function () { line(0, 0, trekant.a, 0); translate(trekant.a, 0); });
-    instructions.push(function () { return rotate(-(180 - trekant.C)); });
-    instructions.push(function () { line(0, 0, trekant.b, 0); translate(trekant.b, 0); });
-    instructions.push(function () { return rotate(-(180 - trekant.A)); });
-    instructions.push(function () { line(0, 0, trekant.c, 0); translate(trekant.c, 0); });
-    instructions.push(function () { return rotate(-(180 - trekant.B)); });
+function createInstructions(_trekant) {
+    // instructions.forEach(() => instructions.pop());
+    trekant = _trekant;
 }
 exports.createInstructions = createInstructions;
 

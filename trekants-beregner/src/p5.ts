@@ -1,9 +1,8 @@
 /// <reference path="../node_modules/@types/p5/global.d.ts"/>
 
-import { ValueMap } from "./helpers";
+import { ValueMap, cos, sin } from "./helpers";
 
-type Instruction = () => void
-const instructions: Instruction[] = [];
+let trekant: ValueMap<number> | undefined;
 
 (window as any).setup = () => {
     createCanvas(windowWidth, windowHeight);
@@ -13,15 +12,25 @@ const instructions: Instruction[] = [];
 (window as any).draw = () => {
     background(255);
     translate(width / 2, height / 2);
-    instructions.forEach(f => f());
+    // instructions.forEach(f => f());
+    if(trekant) {
+        beginShape();
+        const aX = 0;
+        const aY = 0;
+        vertex(aX, aY);
+        
+        const bX = trekant.a;
+        const bY = 0;
+        vertex(bX, bY);
+
+        const cX = trekant.c * cos(trekant.B);
+        const cY = trekant.c * -sin(trekant.B);
+        vertex(cX, cY);
+        endShape(CLOSE);
+    }
 }
 
-export function createInstructions(trekant: ValueMap<number>) {
-    instructions.forEach(instructions.pop);
-    instructions.push(() => { line(0, 0, trekant.a, 0); translate(trekant.a, 0) });
-    instructions.push(() => rotate(-(180 - trekant.C)));
-    instructions.push(() => { line(0, 0, trekant.b, 0); translate(trekant.b, 0) });
-    instructions.push(() => rotate(-(180 - trekant.A)));
-    instructions.push(() => { line(0, 0, trekant.c, 0); translate(trekant.c, 0) });
-    instructions.push(() => rotate(-(180 - trekant.B)));
+export function createInstructions(_trekant: ValueMap<number>) {
+    // instructions.forEach(() => instructions.pop());
+    trekant = _trekant;
 }
