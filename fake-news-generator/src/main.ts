@@ -1,4 +1,8 @@
-class SportFakeNews {
+interface ClasseDiagram {
+    generateHeadline(): string;
+}
+
+class SportFakeNews implements ClasseDiagram {
     syntaxes: string[] = [];
     categorys: Map<string, string[]> = new Map();
 
