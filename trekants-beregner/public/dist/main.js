@@ -117,13 +117,14 @@ function udregn() {
         acc[key] = value ? Number(value) : undefined;
         return acc;
     }, {});
-    if (knownValues.length < 3) {
+    var formulas = formler_1.formler
+        .filter(function (f) { return !knownValues.includes(f.returns); })
+        .filter(function (f) { return helpers_1.hasKnownBits(knownValues, f.requires); });
+    if (formulas.length < 1) {
         console.log('Not enough values');
         return;
     }
-    formler_1.formler
-        .filter(function (f) { return !knownValues.includes(f.returns); })
-        .filter(function (f) { return helpers_1.hasKnownBits(knownValues, f.requires); })
+    formulas
         .forEach(function (f) { return console.log("Calculating " + f.returns + ", result is: " + f.calculate(values)); });
 }
 
@@ -144,6 +145,9 @@ exports.formler = [
     helpers_1.vinkelFormelFactory('a', 'b', 'c', 'A'),
     helpers_1.vinkelFormelFactory('b', 'c', 'a', 'B'),
     helpers_1.vinkelFormelFactory('c', 'a', 'b', 'C'),
+    helpers_1.twoVinklerFactory('A', 'B', 'C'),
+    helpers_1.twoVinklerFactory('C', 'A', 'B'),
+    helpers_1.twoVinklerFactory('B', 'C', 'A')
 ];
 
 
@@ -154,7 +158,7 @@ exports.formler = [
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.vinkelFormelFactory = exports.linjeStykkeFactory = exports.toRadians = exports.toDegrees = exports.cos = exports.acos = exports.hasKnownBits = void 0;
+exports.twoVinklerFactory = exports.vinkelFormelFactory = exports.linjeStykkeFactory = exports.toRadians = exports.toDegrees = exports.sin = exports.cos = exports.acos = exports.hasKnownBits = void 0;
 function hasKnownBits(known, needed) {
     var knownArr = Object.values(known);
     return Object.values(needed).every(function (bit) { return knownArr.includes(bit); });
@@ -168,6 +172,10 @@ function cos(angle) {
     return Math.cos(toRadians(angle));
 }
 exports.cos = cos;
+function sin(angle) {
+    return Math.sin(toRadians(angle));
+}
+exports.sin = sin;
 function toDegrees(angle) {
     return angle * (180 / Math.PI);
 }
@@ -178,7 +186,6 @@ function toRadians(angle) {
 exports.toRadians = toRadians;
 function linjeStykkeFactory(vinkel, aLinje, bLinje, returns) {
     var calculateFunc = function (inputs) {
-        console.log('linjeStykkeFactory');
         var vinkelVal = inputs[vinkel];
         var bVal = inputs[aLinje];
         var cVal = inputs[bLinje];
@@ -196,7 +203,6 @@ function vinkelFormelFactory(aLinje, bLinje, cLinje, returns) {
         var a = inputs[aLinje];
         var b = inputs[bLinje];
         var c = inputs[cLinje];
-        console.log("acos((" + b + "**2 + " + c + "**2 - " + a + "**2) / (2*" + b + "*" + c + "))");
         return acos((Math.pow(b, 2) + Math.pow(c, 2) - Math.pow(a, 2)) / (2 * b * c));
     };
     return {
@@ -206,6 +212,19 @@ function vinkelFormelFactory(aLinje, bLinje, cLinje, returns) {
     };
 }
 exports.vinkelFormelFactory = vinkelFormelFactory;
+function twoVinklerFactory(aVinkel, bVinkel, returns) {
+    var calculateFunc = function (inputs) {
+        var A = inputs[aVinkel];
+        var B = inputs[bVinkel];
+        return 180 - A - B;
+    };
+    return {
+        requires: [aVinkel, bVinkel],
+        returns: returns,
+        calculate: calculateFunc
+    };
+}
+exports.twoVinklerFactory = twoVinklerFactory;
 
 
 /***/ })

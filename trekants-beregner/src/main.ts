@@ -20,10 +20,13 @@ function udregn() {
 
         return acc;
     }, {} as ValueMap<number | undefined>);
-    if(knownValues.length < 3) {console.log('Not enough values'); return;}
 
-    formler
+    const formulas = formler
         .filter(f => !knownValues.includes(f.returns))
-        .filter(f => hasKnownBits(knownValues, f.requires))
+        .filter(f => hasKnownBits(knownValues, f.requires));
+
+    if(formulas.length < 1) {console.log('Not enough values'); return;}
+
+    formulas
         .forEach(f => console.log(`Calculating ${f.returns}, result is: ${f.calculate(values)}`));
 }
