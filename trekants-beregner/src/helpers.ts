@@ -23,7 +23,9 @@ const inputNames: { name: string, id: string }[] = [
     { name: 'Linje a', id: 'a' },
 ];
 
-export function createInputs() {    
+export function createInputs() {
+    const inputField = document.getElementById('input-fields');
+
     inputNames.forEach(inp => {
         const html = `<div>
             <label for="${inp.id}">${inp.name}</label>
@@ -32,7 +34,7 @@ export function createInputs() {
     
         const div = document.createElement('div');
         div.innerHTML = html.trim();
-        document.body.prepend(div.firstChild as Node);
+        inputField?.prepend(div.firstChild as Node);
     });
 }
 
