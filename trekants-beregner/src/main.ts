@@ -29,8 +29,6 @@ function udregn() {
     if (formulas.length < 1) { log('Not enough values'); return; }
 
     while (formulas.length >= 1) {
-        console.log(formulas.length);
-
         formulas.forEach(f => {
             const result = f.calculate(values);
             values[f.returns] = result;
