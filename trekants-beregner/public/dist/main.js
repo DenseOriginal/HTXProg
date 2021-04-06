@@ -101,6 +101,20 @@ var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 var formler_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(2);
+var inputNames = [
+    { name: 'Vinkel C', id: 'C' },
+    { name: 'Vinkel B', id: 'B' },
+    { name: 'Vinkel A', id: 'A' },
+    { name: 'Linje c', id: 'c' },
+    { name: 'Linje b', id: 'b' },
+    { name: 'Linje a', id: 'a' },
+];
+inputNames.forEach(function (inp) {
+    var html = "<div>\n        <label for=\"" + inp.id + "\">" + inp.name + "</label>\n        <input type=\"number\" id=\"" + inp.id + "\" name=\"" + inp.id + "\" class=\"inp\"/>\n    </div>";
+    var div = document.createElement('div');
+    div.innerHTML = html.trim();
+    document.body.prepend(div.firstChild);
+});
 var inputs = __spreadArrays(document.getElementsByClassName('inp')).reduce(function (acc, cur) {
     var id = cur.id;
     acc[id] = cur;
@@ -124,8 +138,6 @@ function udregn() {
         console.log('Not enough values');
         return;
     }
-    console.log(knownValues);
-    console.log(formulas);
     while (formulas.length >= 1) {
         console.log(formulas.length);
         formulas.forEach(function (f) {
