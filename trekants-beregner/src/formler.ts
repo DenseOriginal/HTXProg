@@ -1,4 +1,4 @@
-import { Formel, linjeStykkeFactory, vinkelFormelFactory, twoVinklerFactory } from "./helpers";
+import { Formel, linjeStykkeFactory, vinkelFormelFactory, twoVinklerFactory, sinusRelations } from "./helpers";
 
 
 export const formler: Formel[] = [
@@ -10,5 +10,8 @@ export const formler: Formel[] = [
     vinkelFormelFactory('c', 'a', 'b', 'C'),
     twoVinklerFactory('A', 'B', 'C'),
     twoVinklerFactory('C', 'A', 'B'),
-    twoVinklerFactory('B', 'C', 'A')
+    twoVinklerFactory('B', 'C', 'A'),
+    ...sinusRelations('a', 'b', 'A', 'B'),
+    ...sinusRelations('a', 'c', 'A', 'C'),
+    ...sinusRelations('c', 'b', 'C', 'B'),
 ]

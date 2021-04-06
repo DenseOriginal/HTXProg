@@ -135,10 +135,17 @@ function udregn() {
 
 "use strict";
 
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formler = void 0;
 var helpers_1 = __webpack_require__(2);
-exports.formler = [
+exports.formler = __spreadArrays([
     helpers_1.linjeStykkeFactory('A', 'b', 'c', 'a'),
     helpers_1.linjeStykkeFactory('B', 'a', 'c', 'b'),
     helpers_1.linjeStykkeFactory('C', 'a', 'b', 'c'),
@@ -148,7 +155,7 @@ exports.formler = [
     helpers_1.twoVinklerFactory('A', 'B', 'C'),
     helpers_1.twoVinklerFactory('C', 'A', 'B'),
     helpers_1.twoVinklerFactory('B', 'C', 'A')
-];
+], helpers_1.sinusRelations('a', 'b', 'A', 'B'), helpers_1.sinusRelations('a', 'c', 'A', 'C'), helpers_1.sinusRelations('c', 'b', 'C', 'B'));
 
 
 /***/ }),
@@ -158,7 +165,7 @@ exports.formler = [
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.twoVinklerFactory = exports.vinkelFormelFactory = exports.linjeStykkeFactory = exports.toRadians = exports.toDegrees = exports.sin = exports.cos = exports.acos = exports.hasKnownBits = void 0;
+exports.sinusRelations = exports.twoVinklerFactory = exports.vinkelFormelFactory = exports.linjeStykkeFactory = exports.toRadians = exports.toDegrees = exports.sin = exports.cos = exports.asin = exports.acos = exports.hasKnownBits = void 0;
 function hasKnownBits(known, needed) {
     var knownArr = Object.values(known);
     return Object.values(needed).every(function (bit) { return knownArr.includes(bit); });
@@ -168,6 +175,10 @@ function acos(inp) {
     return toDegrees(Math.acos(inp));
 }
 exports.acos = acos;
+function asin(inp) {
+    return toDegrees(Math.asin(inp));
+}
+exports.asin = asin;
 function cos(angle) {
     return Math.cos(toRadians(angle));
 }
@@ -225,6 +236,43 @@ function twoVinklerFactory(aVinkel, bVinkel, returns) {
     };
 }
 exports.twoVinklerFactory = twoVinklerFactory;
+function sinusRelations(aLinje, bLinje, aVinkel, bVinkel) {
+    return [
+        {
+            requires: [aVinkel, bLinje, bVinkel],
+            returns: aLinje,
+            calculate: function (_a) {
+                var _b = aVinkel, A = _a[_b], _c = bLinje, b = _a[_c], _d = bVinkel, B = _a[_d];
+                return (b !== null && b !== void 0 ? b : 0) / sin(B !== null && B !== void 0 ? B : 0) * sin(A !== null && A !== void 0 ? A : 0);
+            }
+        },
+        {
+            requires: [bVinkel, aLinje, aVinkel],
+            returns: bLinje,
+            calculate: function (_a) {
+                var _b = bVinkel, B = _a[_b], _c = aLinje, a = _a[_c], _d = aVinkel, A = _a[_d];
+                return (a !== null && a !== void 0 ? a : 0) / sin(A !== null && A !== void 0 ? A : 0) * sin(B !== null && B !== void 0 ? B : 0);
+            }
+        },
+        {
+            requires: [aLinje, bLinje, bVinkel],
+            returns: aVinkel,
+            calculate: function (_a) {
+                var _b = aLinje, a = _a[_b], _c = bLinje, b = _a[_c], _d = bVinkel, B = _a[_d];
+                return asin(((a !== null && a !== void 0 ? a : 0) * sin(B !== null && B !== void 0 ? B : 0)) / (b !== null && b !== void 0 ? b : 0));
+            }
+        },
+        {
+            requires: [aLinje, bLinje, aVinkel],
+            returns: bVinkel,
+            calculate: function (_a) {
+                var _b = aLinje, a = _a[_b], _c = bLinje, b = _a[_c], _d = aVinkel, A = _a[_d];
+                return asin(((b !== null && b !== void 0 ? b : 0) * sin(A !== null && A !== void 0 ? A : 0)) / (a !== null && a !== void 0 ? a : 0));
+            }
+        }
+    ];
+}
+exports.sinusRelations = sinusRelations;
 
 
 /***/ })
