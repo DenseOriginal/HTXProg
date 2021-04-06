@@ -90,12 +90,41 @@
 
 "use strict";
 
-/// <reference path="../node_modules/@types/p5/global.d.ts"/>
-window.setup = function () {
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
 };
-window.draw = function () {
-    background(255);
-};
+var _a;
+var inputs = __spreadArrays(document.getElementsByClassName('inp')).reduce(function (acc, cur) {
+    var _id = cur.id, name = cur.name;
+    var id = _id;
+    acc[id] = cur;
+    return acc;
+}, {});
+(_a = document.getElementById('submit')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', udregn);
+function udregn() {
+    var knownValues = 0;
+    var values = Object.entries(inputs).reduce(function (acc, cur) {
+        var _a = cur, key = _a[0], elm = _a[1];
+        var value = elm.value;
+        if (value && !isNaN(value))
+            knownValues++;
+        acc[key] = value;
+        return acc;
+    }, {});
+}
+function linjeStykkeFactory(vinkel, bLinje, cLinje) {
+    return function (inputs) {
+        var vinkelVal = inputs[vinkel];
+        var bVal = inputs[bLinje];
+        var cVal = inputs[cLinje];
+        return Math.sqrt(Math.pow(bVal, 2) + Math.pow(cVal, 2) - 2 * bVal * cVal * Math.cos(vinkelVal));
+    };
+}
+linjeStykkeFactory('A', 'b', 'c');
 
 
 /***/ })
