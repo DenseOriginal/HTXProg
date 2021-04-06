@@ -14,19 +14,33 @@ function udregn() {
     const values = Object.entries(inputs).reduce((acc, cur) => {
         const [key, elm] = cur as [keyofValueMap, HTMLInputElement];
         const { value } = elm;
-        if(value) knownValues.push(key);
-        
+        if (value) knownValues.push(key);
+
         acc[key] = value ? Number(value) : undefined;
 
         return acc;
     }, {} as ValueMap<number | undefined>);
 
-    const formulas = formler
+    let formulas = formler
         .filter(f => !knownValues.includes(f.returns))
         .filter(f => hasKnownBits(knownValues, f.requires));
 
-    if(formulas.length < 1) {console.log('Not enough values'); return;}
+    while (formulas.length > 1) {
+        formulas.forEach(f => {
+            const result = f.calculate(values);
+            values[f.returns] = result;
+            inputs[f.returns].value = result.toString();
+            knownValues.push(f.returns);
+            console.log(`Calculating ${f.returns}, result is: ${result}`)
+        });
 
-    formulas
-        .forEach(f => console.log(`Calculating ${f.returns}, result is: ${f.calculate(values)}`));
+        formulas = formler
+            .filter(f => !knownValues.includes(f.returns))
+            .filter(f => hasKnownBits(knownValues, f.requires));
+        console.log(formulas.length);
+
+    }
+
+    // if () { console.log('Not enough values'); return; }
+
 }

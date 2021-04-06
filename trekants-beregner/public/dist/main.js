@@ -120,12 +120,20 @@ function udregn() {
     var formulas = formler_1.formler
         .filter(function (f) { return !knownValues.includes(f.returns); })
         .filter(function (f) { return helpers_1.hasKnownBits(knownValues, f.requires); });
-    if (formulas.length < 1) {
-        console.log('Not enough values');
-        return;
+    while (formulas.length > 1) {
+        formulas.forEach(function (f) {
+            var result = f.calculate(values);
+            values[f.returns] = result;
+            inputs[f.returns].value = result.toString();
+            knownValues.push(f.returns);
+            console.log("Calculating " + f.returns + ", result is: " + result);
+        });
+        formulas = formler_1.formler
+            .filter(function (f) { return !knownValues.includes(f.returns); })
+            .filter(function (f) { return helpers_1.hasKnownBits(knownValues, f.requires); });
+        console.log(formulas.length);
     }
-    formulas
-        .forEach(function (f) { return console.log("Calculating " + f.returns + ", result is: " + f.calculate(values)); });
+    // if () { console.log('Not enough values'); return; }
 }
 
 
