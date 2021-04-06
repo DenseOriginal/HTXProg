@@ -25,11 +25,15 @@ function udregn() {
         .filter(f => !knownValues.includes(f.returns))
         .filter(f => hasKnownBits(knownValues, f.requires));
 
-    while (formulas.length > 1) {
+    if (formulas.length < 1) { console.log('Not enough values'); return; }
+
+    while (formulas.length >= 1) {
+        console.log(formulas.length);
+
         formulas.forEach(f => {
             const result = f.calculate(values);
             values[f.returns] = result;
-            inputs[f.returns].value = result.toString();
+            inputs[f.returns].value = result.toFixed(2).toString();
             knownValues.push(f.returns);
             console.log(`Calculating ${f.returns}, result is: ${result}`)
         });
@@ -37,10 +41,10 @@ function udregn() {
         formulas = formler
             .filter(f => !knownValues.includes(f.returns))
             .filter(f => hasKnownBits(knownValues, f.requires));
-        console.log(formulas.length);
 
     }
 
-    // if () { console.log('Not enough values'); return; }
 
 }
+
+document.getElementById('reset')?.addEventListener('click', () => Object.values(inputs).forEach(i => i.value = ''));

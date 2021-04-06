@@ -97,7 +97,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
             r[k] = a[j];
     return r;
 };
-var _a;
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 var formler_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(2);
@@ -120,21 +120,27 @@ function udregn() {
     var formulas = formler_1.formler
         .filter(function (f) { return !knownValues.includes(f.returns); })
         .filter(function (f) { return helpers_1.hasKnownBits(knownValues, f.requires); });
-    while (formulas.length > 1) {
+    if (formulas.length < 1) {
+        console.log('Not enough values');
+        return;
+    }
+    console.log(knownValues);
+    console.log(formulas);
+    while (formulas.length >= 1) {
+        console.log(formulas.length);
         formulas.forEach(function (f) {
             var result = f.calculate(values);
             values[f.returns] = result;
-            inputs[f.returns].value = result.toString();
+            inputs[f.returns].value = result.toFixed(2).toString();
             knownValues.push(f.returns);
             console.log("Calculating " + f.returns + ", result is: " + result);
         });
         formulas = formler_1.formler
             .filter(function (f) { return !knownValues.includes(f.returns); })
             .filter(function (f) { return helpers_1.hasKnownBits(knownValues, f.requires); });
-        console.log(formulas.length);
     }
-    // if () { console.log('Not enough values'); return; }
 }
+(_b = document.getElementById('reset')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', function () { return Object.values(inputs).forEach(function (i) { return i.value = ''; }); });
 
 
 /***/ }),
