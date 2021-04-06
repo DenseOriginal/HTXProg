@@ -98,6 +98,9 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+var formler_1 = __webpack_require__(1);
+var helpers_1 = __webpack_require__(2);
 var inputs = __spreadArrays(document.getElementsByClassName('inp')).reduce(function (acc, cur) {
     var id = cur.id;
     acc[id] = cur;
@@ -105,21 +108,104 @@ var inputs = __spreadArrays(document.getElementsByClassName('inp')).reduce(funct
 }, {});
 (_a = document.getElementById('submit')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', udregn);
 function udregn() {
-    var knownValues = 0;
+    var knownValues = [];
     var values = Object.entries(inputs).reduce(function (acc, cur) {
         var _a = cur, key = _a[0], elm = _a[1];
         var value = elm.value;
         if (value)
-            knownValues++;
-        console.log(typeof value);
+            knownValues.push(key);
         acc[key] = value ? Number(value) : undefined;
         return acc;
     }, {});
-    if (knownValues < 3) {
+    if (knownValues.length < 3) {
         console.log('Not enough values');
         return;
     }
+    formler_1.formler
+        .filter(function (f) { return !knownValues.includes(f.returns); })
+        .filter(function (f) { return helpers_1.hasKnownBits(knownValues, f.requires); })
+        .forEach(function (f) { return console.log("Calculating " + f.returns + ", result is: " + f.calculate(values)); });
 }
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.formler = void 0;
+var helpers_1 = __webpack_require__(2);
+exports.formler = [
+    helpers_1.linjeStykkeFactory('A', 'b', 'c', 'a'),
+    helpers_1.linjeStykkeFactory('B', 'a', 'c', 'b'),
+    helpers_1.linjeStykkeFactory('C', 'a', 'b', 'c'),
+    helpers_1.vinkelFormelFactory('a', 'b', 'c', 'A'),
+    helpers_1.vinkelFormelFactory('b', 'c', 'a', 'B'),
+    helpers_1.vinkelFormelFactory('c', 'a', 'b', 'C'),
+];
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.vinkelFormelFactory = exports.linjeStykkeFactory = exports.toRadians = exports.toDegrees = exports.cos = exports.acos = exports.hasKnownBits = void 0;
+function hasKnownBits(known, needed) {
+    var knownArr = Object.values(known);
+    return Object.values(needed).every(function (bit) { return knownArr.includes(bit); });
+}
+exports.hasKnownBits = hasKnownBits;
+function acos(inp) {
+    return toDegrees(Math.acos(inp));
+}
+exports.acos = acos;
+function cos(angle) {
+    return Math.cos(toRadians(angle));
+}
+exports.cos = cos;
+function toDegrees(angle) {
+    return angle * (180 / Math.PI);
+}
+exports.toDegrees = toDegrees;
+function toRadians(angle) {
+    return angle * (Math.PI / 180);
+}
+exports.toRadians = toRadians;
+function linjeStykkeFactory(vinkel, aLinje, bLinje, returns) {
+    var calculateFunc = function (inputs) {
+        console.log('linjeStykkeFactory');
+        var vinkelVal = inputs[vinkel];
+        var bVal = inputs[aLinje];
+        var cVal = inputs[bLinje];
+        return Math.sqrt(Math.pow(bVal, 2) + Math.pow(cVal, 2) - 2 * bVal * cVal * cos(vinkelVal));
+    };
+    return {
+        requires: [vinkel, aLinje, bLinje],
+        returns: returns,
+        calculate: calculateFunc
+    };
+}
+exports.linjeStykkeFactory = linjeStykkeFactory;
+function vinkelFormelFactory(aLinje, bLinje, cLinje, returns) {
+    var calculateFunc = function (inputs) {
+        var a = inputs[aLinje];
+        var b = inputs[bLinje];
+        var c = inputs[cLinje];
+        console.log("acos((" + b + "**2 + " + c + "**2 - " + a + "**2) / (2*" + b + "*" + c + "))");
+        return acos((Math.pow(b, 2) + Math.pow(c, 2) - Math.pow(a, 2)) / (2 * b * c));
+    };
+    return {
+        requires: [aLinje, bLinje, cLinje],
+        returns: returns,
+        calculate: calculateFunc
+    };
+}
+exports.vinkelFormelFactory = vinkelFormelFactory;
 
 
 /***/ })
