@@ -122,7 +122,7 @@ function udregn() {
         .filter(function (f) { return !knownValues.includes(f.returns); })
         .filter(function (f) { return helpers_1.hasKnownBits(knownValues, f.requires); });
     if (formulas.length < 1) {
-        console.log('Not enough values');
+        log('Not enough values');
         return;
     }
     while (formulas.length >= 1) {
@@ -140,6 +140,7 @@ function udregn() {
     }
 }
 (_b = document.getElementById('reset')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', function () { return Object.values(inputs).forEach(function (i) { return i.value = ''; }); });
+var log = function (msg) { return document.getElementById('output').innerHTML = msg; };
 
 
 /***/ }),

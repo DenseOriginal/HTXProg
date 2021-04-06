@@ -26,7 +26,7 @@ function udregn() {
         .filter(f => !knownValues.includes(f.returns))
         .filter(f => hasKnownBits(knownValues, f.requires));
 
-    if (formulas.length < 1) { console.log('Not enough values'); return; }
+    if (formulas.length < 1) { log('Not enough values'); return; }
 
     while (formulas.length >= 1) {
         console.log(formulas.length);
@@ -49,3 +49,4 @@ function udregn() {
 }
 
 document.getElementById('reset')?.addEventListener('click', () => Object.values(inputs).forEach(i => i.value = ''));
+const log = (msg: string) => (document.getElementById('output') as any).innerHTML = msg;
