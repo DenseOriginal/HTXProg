@@ -102,6 +102,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var formler_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(2);
 __webpack_require__(3);
+var p5_1 = __webpack_require__(3);
 helpers_1.createInputs();
 var inputs = __spreadArrays(document.getElementsByClassName('inp')).reduce(function (acc, cur) {
     var id = cur.id;
@@ -138,6 +139,7 @@ function udregn() {
             .filter(function (f) { return !knownValues.includes(f.returns); })
             .filter(function (f) { return helpers_1.hasKnownBits(knownValues, f.requires); });
     }
+    p5_1.createInstructions(values);
 }
 (_b = document.getElementById('reset')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', function () { return Object.values(inputs).forEach(function (i) { return i.value = ''; }); });
 var log = function (msg) { return document.getElementById('output').innerHTML = msg; };
@@ -316,12 +318,28 @@ exports.sinusRelations = sinusRelations;
 "use strict";
 
 /// <reference path="../node_modules/@types/p5/global.d.ts"/>
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createInstructions = void 0;
+var instructions = [];
 window.setup = function () {
     createCanvas(windowWidth, windowHeight);
+    angleMode(DEGREES);
 };
 window.draw = function () {
     background(255);
+    translate(width / 2, height / 2);
+    instructions.forEach(function (f) { return f(); });
 };
+function createInstructions(trekant) {
+    instructions.forEach(instructions.pop);
+    instructions.push(function () { line(0, 0, trekant.a, 0); translate(trekant.a, 0); });
+    instructions.push(function () { return rotate(-(180 - trekant.C)); });
+    instructions.push(function () { line(0, 0, trekant.b, 0); translate(trekant.b, 0); });
+    instructions.push(function () { return rotate(-(180 - trekant.A)); });
+    instructions.push(function () { line(0, 0, trekant.c, 0); translate(trekant.c, 0); });
+    instructions.push(function () { return rotate(-(180 - trekant.B)); });
+}
+exports.createInstructions = createInstructions;
 
 
 /***/ })

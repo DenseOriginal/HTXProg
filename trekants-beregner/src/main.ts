@@ -1,6 +1,7 @@
 import { formler } from "./formler";
 import { createInputs, hasKnownBits, keyofValueMap, ValueMap } from "./helpers";
 import "./p5";
+import { createInstructions } from "./p5";
 
 createInputs();
 
@@ -44,7 +45,7 @@ function udregn() {
 
     }
 
-
+    createInstructions(values as any);
 }
 
 document.getElementById('reset')?.addEventListener('click', () => Object.values(inputs).forEach(i => i.value = ''));
