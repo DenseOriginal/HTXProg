@@ -1,25 +1,7 @@
 import { formler } from "./formler";
-import { hasKnownBits, keyofValueMap, ValueMap } from "./helpers";
+import { createInputs, hasKnownBits, keyofValueMap, ValueMap } from "./helpers";
 
-const inputNames: { name: string, id: string }[] = [
-    { name: 'Vinkel C', id: 'C' },
-    { name: 'Vinkel B', id: 'B' },
-    { name: 'Vinkel A', id: 'A' },
-    { name: 'Linje c', id: 'c' },
-    { name: 'Linje b', id: 'b' },
-    { name: 'Linje a', id: 'a' },
-];
-
-inputNames.forEach(inp => {
-    const html = `<div>
-        <label for="${inp.id}">${inp.name}</label>
-        <input type="number" id="${inp.id}" name="${inp.id}" class="inp"/>
-    </div>`;
-
-    const div = document.createElement('div');
-    div.innerHTML = html.trim();
-    document.body.prepend(div.firstChild as Node);
-});
+createInputs();
 
 const inputs: ValueMap<HTMLInputElement> = [...document.getElementsByClassName('inp') as any].reduce((acc, cur: HTMLInputElement) => {
     const id = cur.id as keyofValueMap;

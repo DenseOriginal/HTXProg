@@ -101,20 +101,7 @@ var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 var formler_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(2);
-var inputNames = [
-    { name: 'Vinkel C', id: 'C' },
-    { name: 'Vinkel B', id: 'B' },
-    { name: 'Vinkel A', id: 'A' },
-    { name: 'Linje c', id: 'c' },
-    { name: 'Linje b', id: 'b' },
-    { name: 'Linje a', id: 'a' },
-];
-inputNames.forEach(function (inp) {
-    var html = "<div>\n        <label for=\"" + inp.id + "\">" + inp.name + "</label>\n        <input type=\"number\" id=\"" + inp.id + "\" name=\"" + inp.id + "\" class=\"inp\"/>\n    </div>";
-    var div = document.createElement('div');
-    div.innerHTML = html.trim();
-    document.body.prepend(div.firstChild);
-});
+helpers_1.createInputs();
 var inputs = __spreadArrays(document.getElementsByClassName('inp')).reduce(function (acc, cur) {
     var id = cur.id;
     acc[id] = cur;
@@ -191,12 +178,30 @@ exports.formler = __spreadArrays([
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sinusRelations = exports.twoVinklerFactory = exports.vinkelFormelFactory = exports.linjeStykkeFactory = exports.toRadians = exports.toDegrees = exports.sin = exports.cos = exports.asin = exports.acos = exports.hasKnownBits = void 0;
+exports.sinusRelations = exports.twoVinklerFactory = exports.vinkelFormelFactory = exports.linjeStykkeFactory = exports.toRadians = exports.toDegrees = exports.sin = exports.cos = exports.asin = exports.acos = exports.hasKnownBits = exports.createInputs = void 0;
+var inputNames = [
+    { name: 'Vinkel C', id: 'C' },
+    { name: 'Vinkel B', id: 'B' },
+    { name: 'Vinkel A', id: 'A' },
+    { name: 'Linje c', id: 'c' },
+    { name: 'Linje b', id: 'b' },
+    { name: 'Linje a', id: 'a' },
+];
+function createInputs() {
+    inputNames.forEach(function (inp) {
+        var html = "<div>\n            <label for=\"" + inp.id + "\">" + inp.name + "</label>\n            <input type=\"number\" id=\"" + inp.id + "\" name=\"" + inp.id + "\" class=\"inp\"/>\n        </div>";
+        var div = document.createElement('div');
+        div.innerHTML = html.trim();
+        document.body.prepend(div.firstChild);
+    });
+}
+exports.createInputs = createInputs;
 function hasKnownBits(known, needed) {
     var knownArr = Object.values(known);
     return Object.values(needed).every(function (bit) { return knownArr.includes(bit); });
 }
 exports.hasKnownBits = hasKnownBits;
+//#region 
 function acos(inp) {
     return toDegrees(Math.acos(inp));
 }
@@ -221,6 +226,7 @@ function toRadians(angle) {
     return angle * (Math.PI / 180);
 }
 exports.toRadians = toRadians;
+//#endregion
 function linjeStykkeFactory(vinkel, aLinje, bLinje, returns) {
     var calculateFunc = function (inputs) {
         var vinkelVal = inputs[vinkel];

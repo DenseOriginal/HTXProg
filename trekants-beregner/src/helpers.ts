@@ -14,11 +14,34 @@ export interface Formel {
     calculate(inputs: ValueMap<number | undefined>): number
 }
 
+const inputNames: { name: string, id: string }[] = [
+    { name: 'Vinkel C', id: 'C' },
+    { name: 'Vinkel B', id: 'B' },
+    { name: 'Vinkel A', id: 'A' },
+    { name: 'Linje c', id: 'c' },
+    { name: 'Linje b', id: 'b' },
+    { name: 'Linje a', id: 'a' },
+];
+
+export function createInputs() {    
+    inputNames.forEach(inp => {
+        const html = `<div>
+            <label for="${inp.id}">${inp.name}</label>
+            <input type="number" id="${inp.id}" name="${inp.id}" class="inp"/>
+        </div>`;
+    
+        const div = document.createElement('div');
+        div.innerHTML = html.trim();
+        document.body.prepend(div.firstChild as Node);
+    });
+}
+
 export function hasKnownBits(known: keyofValueMap[], needed: keyofValueMap[]): boolean {
     const knownArr = Object.values(known);
     return Object.values(needed).every(bit => knownArr.includes(bit));
 }
 
+//#region 
 export function acos(inp: number) {
     return toDegrees(Math.acos(inp));
 }
@@ -42,7 +65,7 @@ export function toDegrees(angle: number) {
 export function toRadians(angle: number) {
     return angle * (Math.PI / 180);
 }
-
+//#endregion
 
 export function linjeStykkeFactory(vinkel: keyofValueMap, aLinje: keyofValueMap, bLinje: keyofValueMap, returns: keyofValueMap): Formel {
     const calculateFunc = (inputs: ValueMap<number | undefined>) => {
