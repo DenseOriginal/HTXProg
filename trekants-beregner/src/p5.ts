@@ -11,8 +11,8 @@ let trekant: ValueMap<number> | undefined;
 
 (window as any).draw = () => {
     background(255);
-    translate(width / 2, height / 2);
-    // instructions.forEach(f => f());
+    move(width / 2, height / 2);
+
     if(trekant) {
         beginShape();
         const aX = 0;
@@ -34,3 +34,6 @@ export function createInstructions(_trekant: ValueMap<number>) {
     // instructions.forEach(() => instructions.pop());
     trekant = _trekant;
 }
+
+const origin = { x: 0, y: 0 };
+function move(x: number, y: number) { translate(x, y); origin.x += x; origin.y += y; }
