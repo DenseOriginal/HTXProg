@@ -329,7 +329,6 @@ window.setup = function () {
 window.draw = function () {
     background(255);
     translate(width / 2, height / 2);
-    // instructions.forEach(f => f());
     if (trekant) {
         beginShape();
         var aX = 0;
