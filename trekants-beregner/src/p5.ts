@@ -14,17 +14,23 @@ let trekant: ValueMap<number> | undefined;
     translate(width / 2, height / 2);
 
     if(trekant) {
-        beginShape();
         const aX = 0;
         const aY = 0;
-        vertex(aX, aY);
         
         const bX = trekant.a;
         const bY = 0;
-        vertex(bX, bY);
-
+        
         const cX = trekant.c * cos(trekant.B);
         const cY = trekant.c * -sin(trekant.B);
+
+        const averageX = (aX + bX + cX) / 3;
+        const averageY = (aY + bY + cY) / 3;
+
+        translate(-averageX, -averageY);
+
+        beginShape();
+        vertex(aX, aY);
+        vertex(bX, bY);
         vertex(cX, cY);
         endShape(CLOSE);
     }

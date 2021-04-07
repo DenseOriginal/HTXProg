@@ -330,15 +330,18 @@ window.draw = function () {
     background(255);
     translate(width / 2, height / 2);
     if (trekant) {
-        beginShape();
         var aX = 0;
         var aY = 0;
-        vertex(aX, aY);
         var bX = trekant.a;
         var bY = 0;
-        vertex(bX, bY);
         var cX = trekant.c * helpers_1.cos(trekant.B);
         var cY = trekant.c * -helpers_1.sin(trekant.B);
+        var averageX = (aX + bX + cX) / 3;
+        var averageY = (aY + bY + cY) / 3;
+        translate(-averageX, -averageY);
+        beginShape();
+        vertex(aX, aY);
+        vertex(bX, bY);
         vertex(cX, cY);
         endShape(CLOSE);
     }
