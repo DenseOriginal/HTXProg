@@ -179,6 +179,16 @@ exports.formler = __spreadArrays([
             var a = _a.a, b = _a.b, c = _a.c;
             return (a !== null && a !== void 0 ? a : 0) + (b !== null && b !== void 0 ? b : 0) + (c !== null && c !== void 0 ? c : 0);
         }
+    },
+    {
+        requires: ['a', 'b', 'c'],
+        returns: 'areal',
+        calculate: function (_a) {
+            var a = _a.a, b = _a.b, c = _a.c;
+            var s = ((a !== null && a !== void 0 ? a : 0) + (b !== null && b !== void 0 ? b : 0) + (c !== null && c !== void 0 ? c : 0)) / 2;
+            return Math.sqrt(s * (s - (a !== null && a !== void 0 ? a : 0)) * (s - (b !== null && b !== void 0 ? b : 0)) * (s - (c !== null && c !== void 0 ? c : 0)));
+            return 0;
+        }
     }
 ]);
 
@@ -193,6 +203,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sinusRelations = exports.twoVinklerFactory = exports.vinkelFormelFactory = exports.linjeStykkeFactory = exports.toRadians = exports.toDegrees = exports.sin = exports.cos = exports.asin = exports.acos = exports.hasKnownBits = exports.createInputs = void 0;
 var inputNames = [
     { name: 'Omkreds', id: 'O' },
+    { name: 'Areal', id: 'areal' },
     { name: 'Vinkel C', id: 'C' },
     { name: 'Vinkel B', id: 'B' },
     { name: 'Vinkel A', id: 'A' },
