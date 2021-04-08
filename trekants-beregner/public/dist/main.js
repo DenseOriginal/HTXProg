@@ -171,7 +171,16 @@ exports.formler = __spreadArrays([
     helpers_1.twoVinklerFactory('A', 'B', 'C'),
     helpers_1.twoVinklerFactory('C', 'A', 'B'),
     helpers_1.twoVinklerFactory('B', 'C', 'A')
-], helpers_1.sinusRelations('a', 'b', 'A', 'B'), helpers_1.sinusRelations('a', 'c', 'A', 'C'), helpers_1.sinusRelations('c', 'b', 'C', 'B'));
+], helpers_1.sinusRelations('a', 'b', 'A', 'B'), helpers_1.sinusRelations('a', 'c', 'A', 'C'), helpers_1.sinusRelations('c', 'b', 'C', 'B'), [
+    {
+        requires: ['a', 'b', 'c'],
+        returns: 'O',
+        calculate: function (_a) {
+            var a = _a.a, b = _a.b, c = _a.c;
+            return (a !== null && a !== void 0 ? a : 0) + (b !== null && b !== void 0 ? b : 0) + (c !== null && c !== void 0 ? c : 0);
+        }
+    }
+]);
 
 
 /***/ }),
@@ -183,6 +192,7 @@ exports.formler = __spreadArrays([
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sinusRelations = exports.twoVinklerFactory = exports.vinkelFormelFactory = exports.linjeStykkeFactory = exports.toRadians = exports.toDegrees = exports.sin = exports.cos = exports.asin = exports.acos = exports.hasKnownBits = exports.createInputs = void 0;
 var inputNames = [
+    { name: 'Omkreds', id: 'O' },
     { name: 'Vinkel C', id: 'C' },
     { name: 'Vinkel B', id: 'B' },
     { name: 'Vinkel A', id: 'A' },

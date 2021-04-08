@@ -5,6 +5,7 @@ export interface ValueMap<T> {
     A: T;
     B: T;
     C: T;
+    O: T;
 }
 export type keyofValueMap = keyof ValueMap<any>;
 
@@ -15,6 +16,7 @@ export interface Formel {
 }
 
 const inputNames: { name: string, id: string }[] = [
+    { name: 'Omkreds', id: 'O' },
     { name: 'Vinkel C', id: 'C' },
     { name: 'Vinkel B', id: 'B' },
     { name: 'Vinkel A', id: 'A' },

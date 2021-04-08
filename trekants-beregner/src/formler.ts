@@ -14,4 +14,9 @@ export const formler: Formel[] = [
     ...sinusRelations('a', 'b', 'A', 'B'),
     ...sinusRelations('a', 'c', 'A', 'C'),
     ...sinusRelations('c', 'b', 'C', 'B'),
+    {
+        requires: ['a', 'b', 'c'],
+        returns: 'O',
+        calculate: ({ a, b, c }) => (a ?? 0) + (b ?? 0) + (c ?? 0)
+    }
 ]
