@@ -31,12 +31,12 @@ function udregn() {
     if (formulas.length < 1) { log('Not enough values'); return; }
 
     while (formulas.length >= 1) {
-        formulas.forEach(f => {
-            const result = f.calculate(values);
-            values[f.returns] = result;
-            inputs[f.returns].value = result.toFixed(2).toString();
-            knownValues.push(f.returns);
-            console.log(`Calculating ${f.returns}, result is: ${result}`)
+        formulas.forEach(formula => {
+            const result = formula.calculate(values);
+            values[formula.returns] = result;
+            inputs[formula.returns].value = result.toFixed(2).toString();
+            knownValues.push(formula.returns);
+            console.log(`Calculating ${formula.returns}, result is: ${result}`)
         });
 
         formulas = formler
