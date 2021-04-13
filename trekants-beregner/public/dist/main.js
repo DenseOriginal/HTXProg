@@ -128,12 +128,12 @@ function udregn() {
         return;
     }
     while (formulas.length >= 1) {
-        formulas.forEach(function (f) {
-            var result = f.calculate(values);
-            values[f.returns] = result;
-            inputs[f.returns].value = result.toFixed(2).toString();
-            knownValues.push(f.returns);
-            console.log("Calculating " + f.returns + ", result is: " + result);
+        formulas.forEach(function (formula) {
+            var result = formula.calculate(values);
+            values[formula.returns] = result;
+            inputs[formula.returns].value = result.toFixed(2).toString();
+            knownValues.push(formula.returns);
+            console.log("Calculating " + formula.returns + ", result is: " + result);
         });
         formulas = formler_1.formler
             .filter(function (f) { return !knownValues.includes(f.returns); })
@@ -187,7 +187,6 @@ exports.formler = __spreadArrays([
             var a = _a.a, b = _a.b, c = _a.c;
             var s = ((a !== null && a !== void 0 ? a : 0) + (b !== null && b !== void 0 ? b : 0) + (c !== null && c !== void 0 ? c : 0)) / 2;
             return Math.sqrt(s * (s - (a !== null && a !== void 0 ? a : 0)) * (s - (b !== null && b !== void 0 ? b : 0)) * (s - (c !== null && c !== void 0 ? c : 0)));
-            return 0;
         }
     }
 ]);

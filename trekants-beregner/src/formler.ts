@@ -25,7 +25,6 @@ export const formler: Formel[] = [
         calculate: ({ a, b, c }) => {
             const s = ((a ?? 0) + (b ?? 0) + (c ?? 0)) / 2;
             return Math.sqrt( s * ( s - (a ?? 0) ) * ( s - (b ?? 0) ) * ( s - (c ?? 0) ) );
-            return 0;
         }
     }
 ]
