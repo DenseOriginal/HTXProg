@@ -103,7 +103,7 @@ var lower = document.getElementById('lower');
 window.draw = function () {
     var uppperBrydning = parseFloat(upper.value || "2");
     var lowerBrydning = parseFloat(lower.value || "1.33");
-    criticalVinkel = asin(uppperBrydning / lowerBrydning);
+    criticalVinkel = asin(lowerBrydning / uppperBrydning);
     background(255);
     // Draw water surface line
     strokeWeight(1);

@@ -15,7 +15,7 @@ const lower = document.getElementById('lower') as HTMLInputElement;
 (window as any).draw = () => {
     const uppperBrydning = parseFloat(upper.value || "2");
     const lowerBrydning = parseFloat(lower.value || "1.33");
-    criticalVinkel = asin(uppperBrydning / lowerBrydning);
+    criticalVinkel = asin(lowerBrydning / uppperBrydning);
 
     background(255);
 
