@@ -1,18 +1,22 @@
 /// <reference path="../node_modules/@types/p5/global.d.ts"/>
 
 let waterSurface: number = 0;
-const uppperBrydning = 1;
-const lowerBrydning = 1.33;
 let criticalVinkel = 0;
 
 (window as any).setup = () => {
 	createCanvas(windowWidth, windowHeight);
     waterSurface = height / 2;
     angleMode(DEGREES);
-    criticalVinkel = asin(uppperBrydning / lowerBrydning);
 }
 
+const upper = document.getElementById('upper') as HTMLInputElement;
+const lower = document.getElementById('lower') as HTMLInputElement;
+
 (window as any).draw = () => {
+    const uppperBrydning = parseFloat(upper.value || "2");
+    const lowerBrydning = parseFloat(lower.value || "1.33");
+    criticalVinkel = asin(uppperBrydning / lowerBrydning);
+
     background(255);
 
     // Draw water surface line

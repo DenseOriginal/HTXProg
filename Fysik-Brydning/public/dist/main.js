@@ -92,16 +92,18 @@
 
 /// <reference path="../node_modules/@types/p5/global.d.ts"/>
 var waterSurface = 0;
-var uppperBrydning = 1;
-var lowerBrydning = 1.33;
 var criticalVinkel = 0;
 window.setup = function () {
     createCanvas(windowWidth, windowHeight);
     waterSurface = height / 2;
     angleMode(DEGREES);
-    criticalVinkel = asin(uppperBrydning / lowerBrydning);
 };
+var upper = document.getElementById('upper');
+var lower = document.getElementById('lower');
 window.draw = function () {
+    var uppperBrydning = parseFloat(upper.value || "2");
+    var lowerBrydning = parseFloat(lower.value || "1.33");
+    criticalVinkel = asin(uppperBrydning / lowerBrydning);
     background(255);
     // Draw water surface line
     strokeWeight(1);

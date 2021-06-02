@@ -10,3 +10,16 @@ body {
     display: grid;
     place-items: center;
 }
+
+.input {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+input {
+    width: 50px;
+}
