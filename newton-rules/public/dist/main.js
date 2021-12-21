@@ -101,14 +101,15 @@ var pixelsPerM;
 var screenLengthInMeters = 100; // m
 window.setup = function () {
     createCanvas(windowWidth, windowHeight);
-    pos = createVector(0, height / 2);
+    pos = createVector(0, height);
     vec = createVector(0, 0);
     acc = createVector(0, 0);
     pixelsPerM = width / screenLengthInMeters;
-    setInterval(function () { return applyForce(createVector(100, 0)); }, 2000);
+    applyForce(createVector(200, -500));
 };
 window.draw = function () {
     background(255);
+    fill(0);
     circle(pos.x, pos.y, radius);
     pos.add(vectorToPixels(vec));
     vec.add(acc);
