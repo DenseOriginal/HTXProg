@@ -1,10 +1,15 @@
 /// <reference path="../node_modules/@types/p5/global.d.ts"/>
 
-import { Vector } from "p5";
+import p5, { Vector } from "p5";
 
 let P1: Vector;
 let P2: Vector;
 let P3: Vector;
+
+let vec1: Vector;
+let vec2: Vector;
+let acc1: Vector;
+let acc2: Vector;
 
 let origin: Vector;
 let xAxis: Vector;
@@ -18,6 +23,11 @@ let zAxis: Vector;
 	P1 = createVector(0, 0, 0);
 	P2 = createVector(50, 0, 30);
 	P3 = createVector(0, 50, 30);
+
+	vec1 = createVector(0, 0, 0);
+	vec2 = createVector(0, 0, 0);
+	acc1 = createVector(0, 0, 0);
+	acc2 = createVector(0, 0, 0);
 
 	origin = createVector(0, 0, 0);
 	xAxis = createVector(200, 0, 0);
@@ -71,11 +81,26 @@ let zAxis: Vector;
 	noStroke();
 	fill(175, 100);
 	beginShape();
-	vertex(solveForX(P1, normal, -5000, -5000), -5000, -5000);
-	vertex(solveForX(P1, normal, 5000, -5000), 5000, -5000);
-	vertex(solveForX(P1, normal, 5000, 5000), 5000, 5000);
-	vertex(solveForX(P1, normal, -5000, 5000), -5000, 5000);
+	vertex(solveForX(P1, normal, -200, -200), -200, -200);
+	vertex(solveForX(P1, normal, 200, -200), 200, -200);
+	vertex(solveForX(P1, normal, 200, 200), 200, 200);
+	vertex(solveForX(P1, normal, -200, 200), -200, 200);
 	endShape();
+
+	// Dumb shit to animate P2 and P3 nicely
+	P2.add(vec1);
+	P2.limit(100);
+	vec1.add(acc1);
+	vec1.mult(0.95);
+	acc1.mult(0);
+	acc1.add([random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05)]);
+
+	P3.add(vec2);
+	P3.limit(100);
+	vec2.add(acc2);
+	vec2.mult(0.95);
+	acc2.mult(0);
+	acc2.add([random(-0.05, 0.05), random(-0.05, 0.05), random(-0.05, 0.05)]);
 }
 
 
