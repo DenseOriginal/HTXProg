@@ -10,3 +10,9 @@ body {
     display: grid;
     place-items: center;
 }
+
+button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
