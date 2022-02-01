@@ -1,22 +1,28 @@
 /// <reference path="../node_modules/@types/p5/global.d.ts"/>
 
-let angle = 0;
-let angleOffset = 0;
-
 (window as any).setup = () => {
 	createCanvas(windowWidth, windowHeight);
-	angleOffset = random(-0.1, 0.1);
+	frameRate(2);
 }
 
 (window as any).draw = () => {
-	colorMode(HSB, 255);
-	background(frameCount % 255, 255, 255);
-	translate(width / 2, height / 2);
-	rectMode(CENTER);
-	noStroke();
+	background(255);
+	const a = random(1, -1);
+	const endPointY = random(0, height);
+	console.log({ endPointY });
+	
+	const b = -(a * (width) - endPointY);
+	console.log(`y = ${a}x + ${b}`);
+	
 
-	if(frameCount % 30 == 0) angleOffset = random(-0.1, 0.1);
-	angle += angleOffset;
-	rotate(angle);
-	rect(0, 0, 50, 50);
+	stroke(255, 175, 175);
+	strokeWeight(2);
+	circle(width, endPointY, 10);
+
+	for(let x = 0; x < width; x += 10) {
+		const y = a * x + b;
+		console.log({ x, y });
+		
+		circle(x, y, 2);
+	}
 }
