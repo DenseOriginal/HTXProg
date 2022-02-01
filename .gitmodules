@@ -1,3 +1,6 @@
 [submodule "Computer-Basics"]
 	path = Computer-Basics
 	url = https://github.com/DenseOriginal/Computer-Basics
+[submodule "GUI-basic"]
+	path = GUI-basic
+	url = https://github.com/DenseOriginal/GUI-basic
