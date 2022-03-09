@@ -4,7 +4,8 @@ import { Vector } from "p5";
 import { UFO } from "./ufo";
 
 let objects: UFO[] = [];
-let playerY: number = 0;
+export let playerY: number = 0;
+export let playerX: number = 0;
 const playerSpeed = 5;
 
 (window as any).setup = () => {
@@ -17,13 +18,14 @@ const playerSpeed = 5;
 	));
 
 	playerY = height / 2;
+	playerX = width - 15;
 }
 
 (window as any).draw = () => {
 	background(255);
 
 	// For testing porpuse
-	if(frameCount % 300 == 0) objects.push(new UFO(
+	if(frameCount % 150 == 0) objects.push(new UFO(
 		createVector(0, random(0, height)),
 		createVector(width, random(0, height)),
 	));
@@ -36,6 +38,7 @@ const playerSpeed = 5;
 		// If the object is off screen, then remove it
 		if(object.isToTheRightOfScreen()) {
 			objects.splice(idx, 1);
+			object.destroy();
 			continue;
 		}
 
@@ -43,7 +46,7 @@ const playerSpeed = 5;
 	}
 
 	// Draw player
-	circle(width - 15, playerY, 15);
+	circle(playerX, playerY, 15);
 
 	// Player movement
 	if(keyIsPressed) {

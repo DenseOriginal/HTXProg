@@ -1,7 +1,59 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ([
-/* 0 */,
+/* 0 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+/// <reference path="../node_modules/@types/p5/global.d.ts"/>
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.playerX = exports.playerY = void 0;
+var ufo_1 = __webpack_require__(1);
+var objects = [];
+exports.playerY = 0;
+exports.playerX = 0;
+var playerSpeed = 5;
+window.setup = function () {
+    createCanvas(windowWidth, windowHeight);
+    angleMode(DEGREES);
+    objects.push(new ufo_1.UFO(createVector(0, random(0, height)), createVector(width, random(0, height))));
+    exports.playerY = height / 2;
+    exports.playerX = width - 15;
+};
+window.draw = function () {
+    background(255);
+    // For testing porpuse
+    if (frameCount % 150 == 0)
+        objects.push(new ufo_1.UFO(createVector(0, random(0, height)), createVector(width, random(0, height))));
+    // Loop through the objects array backwards
+    // This is to not disturb the order, if we remove any elements
+    for (var idx = objects.length - 1; idx > 0; idx--) {
+        var object = objects[idx];
+        // If the object is off screen, then remove it
+        if (object.isToTheRightOfScreen()) {
+            objects.splice(idx, 1);
+            object.destroy();
+            continue;
+        }
+        object.live();
+    }
+    // Draw player
+    circle(exports.playerX, exports.playerY, 15);
+    // Player movement
+    if (keyIsPressed) {
+        if (keysDown.has('w'))
+            exports.playerY -= playerSpeed;
+        if (keysDown.has('s'))
+            exports.playerY += playerSpeed;
+    }
+};
+// Key shit
+var keysDown = new Set();
+document.addEventListener('keydown', function (event) { return keysDown.add(event.key.toLowerCase()); });
+document.addEventListener('keyup', function (event) { return keysDown.delete(event.key.toLowerCase()); });
+
+
+/***/ }),
 /* 1 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -9,6 +61,7 @@
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UFO = void 0;
 var colors_1 = __webpack_require__(2);
+var main_1 = __webpack_require__(0);
 // Y translate
 var yTrans = 45;
 var UFO = /** @class */ (function () {
@@ -21,12 +74,17 @@ var UFO = /** @class */ (function () {
         this.scale = random(0.5, 0.8);
         this.wobbleOffset = random(0, 360);
         this.wobbleSpeed = random(2, 5);
+        this.sound = new Audio('https://dkihjuum4jcjr.cloudfront.net/ES_ITUNES/Sci%20Fi%20Ambience%2033/ES_Sci%20Fi%20Ambience%2033.mp3');
         this.pos = startingPoint.copy();
         this.direction = endPoint.copy().sub(startingPoint).normalize().mult(speed);
+        this.sound.loop = true;
+        this.sound.play();
+        this.sound.volume = 0;
     }
     UFO.prototype.live = function () {
         this.move();
         this.draw();
+        this.updateSound();
     };
     UFO.prototype.draw = function () {
         // // Debug stuff
@@ -62,8 +120,16 @@ var UFO = /** @class */ (function () {
         this.pos.y += sin(this.wobbleOffset + frameCount * this.wobbleSpeed) * 2;
         this.pos.add(this.direction);
     };
+    UFO.prototype.updateSound = function () {
+        var distToPlayer = Math.pow((Math.pow((main_1.playerX - this.pos.x), 2) + Math.pow((main_1.playerY - this.pos.y), 2)), 0.5);
+        var soundVolume = Math.pow(0.995, distToPlayer);
+        this.sound.volume = soundVolume;
+    };
+    UFO.prototype.destroy = function () {
+        this.sound.pause();
+    };
     UFO.prototype.isToTheRightOfScreen = function () {
-        return this.pos.x - (50 * 2 * this.scale) > width;
+        return this.pos.x - (50 * 2 * this.scale) > (width * 2);
     };
     return UFO;
 }());
@@ -121,38 +187,11 @@ function randomPastelColor() {
 /******/ 	}
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-var exports = __webpack_exports__;
-
-/// <reference path="../node_modules/@types/p5/global.d.ts"/>
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var ufo_1 = __webpack_require__(1);
-var objects = [];
-window.setup = function () {
-    createCanvas(windowWidth, windowHeight);
-    angleMode(DEGREES);
-    objects.push(new ufo_1.UFO(createVector(0, random(0, height)), createVector(width, random(0, height))));
-};
-window.draw = function () {
-    background(255);
-    if (frameCount % 60 == 0)
-        objects.push(new ufo_1.UFO(createVector(0, random(0, height)), createVector(width, random(0, height))));
-    // Loop through the objects array backwards
-    // This is to not disturb the order, if we remove any elements
-    for (var idx = objects.length - 1; idx > 0; idx--) {
-        var object = objects[idx];
-        // If the object is off screen, then remove it
-        if (object.isToTheRightOfScreen()) {
-            objects.splice(idx, 1);
-            continue;
-        }
-        object.live();
-    }
-};
-
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__(0);
+/******/ 	
 /******/ })()
 ;

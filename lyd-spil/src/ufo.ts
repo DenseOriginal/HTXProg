@@ -1,5 +1,6 @@
 import { Vector } from "p5";
 import { ColorSet } from "./colors";
+import { playerX, playerY } from "./main";
 
 // Y translate
 const yTrans = 45;
@@ -17,6 +18,8 @@ export class UFO {
   private wobbleOffset = random(0, 360);
   private wobbleSpeed = random(2, 5);
 
+  private sound = new Audio('https://dkihjuum4jcjr.cloudfront.net/ES_ITUNES/Sci%20Fi%20Ambience%2033/ES_Sci%20Fi%20Ambience%2033.mp3');
+
   constructor(
     public startingPoint: Vector,
     public endPoint: Vector,
@@ -24,11 +27,16 @@ export class UFO {
   ) {
     this.pos = startingPoint.copy();
     this.direction = endPoint.copy().sub(startingPoint).normalize().mult(speed);
+
+    this.sound.loop = true;
+    this.sound.play();
+    this.sound.volume = 0;
   }
 
   public live(): void {
     this.move();
     this.draw();
+    this.updateSound();
   }
 
   private draw(): void {
@@ -77,7 +85,17 @@ export class UFO {
     this.pos.add(this.direction);
   }
 
+  private updateSound(): void {
+    const distToPlayer = ((playerX - this.pos.x)**2 + (playerY - this.pos.y)**2) ** 0.5;
+    const soundVolume = 0.995**distToPlayer;
+    this.sound.volume = soundVolume;
+  }
+
+  public destroy(): void {
+    this.sound.pause();
+  }
+
   public isToTheRightOfScreen(): boolean {
-    return this.pos.x - (50 * 2 * this.scale) > width;
+    return this.pos.x - (50 * 2 * this.scale) > (width * 2);
   }
 }
