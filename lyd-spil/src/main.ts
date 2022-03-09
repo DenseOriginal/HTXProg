@@ -1,22 +1,38 @@
 /// <reference path="../node_modules/@types/p5/global.d.ts"/>
 
-let angle = 0;
-let angleOffset = 0;
+import { UFO } from "./ufo";
+
+let objects: UFO[] = [];
 
 (window as any).setup = () => {
 	createCanvas(windowWidth, windowHeight);
-	angleOffset = random(-0.1, 0.1);
+	angleMode(DEGREES);
+	
+	objects.push(new UFO(
+		createVector(0, random(0, height)),
+		createVector(width, random(0, height)),
+	));
 }
 
 (window as any).draw = () => {
-	colorMode(HSB, 255);
-	background(frameCount % 255, 255, 255);
-	translate(width / 2, height / 2);
-	rectMode(CENTER);
-	noStroke();
+	background(255);
 
-	if(frameCount % 30 == 0) angleOffset = random(-0.1, 0.1);
-	angle += angleOffset;
-	rotate(angle);
-	rect(0, 0, 50, 50);
+	if(frameCount % 60 == 0) objects.push(new UFO(
+		createVector(0, random(0, height)),
+		createVector(width, random(0, height)),
+	));
+
+	// Loop through the objects array backwards
+	// This is to not disturb the order, if we remove any elements
+	for(let idx = objects.length - 1; idx > 0; idx--) {
+		const object = objects[idx];
+
+		// If the object is off screen, then remove it
+		if(object.isToTheRightOfScreen()) {
+			objects.splice(idx, 1);
+			continue;
+		}
+
+		object.live();
+	}
 }
