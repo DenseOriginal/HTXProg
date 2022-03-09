@@ -13,6 +13,7 @@ var objects = [];
 exports.playerY = 0;
 exports.playerX = 0;
 var playerSpeed = 5;
+var hasToClickForSound = true;
 window.setup = function () {
     createCanvas(windowWidth, windowHeight);
     angleMode(DEGREES);
@@ -38,6 +39,8 @@ window.draw = function () {
         object.live();
     }
     // Draw player
+    fill(255);
+    stroke(0);
     circle(exports.playerX, exports.playerY, 15);
     // Player movement
     if (keyIsPressed) {
@@ -46,11 +49,24 @@ window.draw = function () {
         if (keysDown.has('s'))
             exports.playerY += playerSpeed;
     }
+    // Click for sound
+    if (hasToClickForSound) {
+        fill(255, 50, 50);
+        noStroke();
+        circle(width / 2, height / 2, 100);
+        textAlign(CENTER, CENTER);
+        textSize(50);
+        fill(0);
+        text('Click for sound', width / 2, height / 1.65);
+    }
 };
 // Key shit
 var keysDown = new Set();
 document.addEventListener('keydown', function (event) { return keysDown.add(event.key.toLowerCase()); });
 document.addEventListener('keyup', function (event) { return keysDown.delete(event.key.toLowerCase()); });
+window.mousePressed = function () {
+    hasToClickForSound = false;
+};
 
 
 /***/ }),

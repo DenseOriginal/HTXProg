@@ -7,6 +7,7 @@ let objects: UFO[] = [];
 export let playerY: number = 0;
 export let playerX: number = 0;
 const playerSpeed = 5;
+let hasToClickForSound = true;
 
 (window as any).setup = () => {
 	createCanvas(windowWidth, windowHeight);
@@ -46,6 +47,8 @@ const playerSpeed = 5;
 	}
 
 	// Draw player
+	fill(255);
+	stroke(0);
 	circle(playerX, playerY, 15);
 
 	// Player movement
@@ -53,9 +56,24 @@ const playerSpeed = 5;
 		if(keysDown.has('w')) playerY -= playerSpeed;
 		if(keysDown.has('s')) playerY += playerSpeed;
 	}
+
+	// Click for sound
+	if(hasToClickForSound) {
+		fill(255, 50, 50);
+		noStroke();
+		circle(width / 2, height / 2, 100);
+		textAlign(CENTER, CENTER);
+		textSize(50);
+		fill(0);
+		text('Click for sound', width / 2, height / 1.65);
+	}
 }
 
 // Key shit
 const keysDown = new Set();
 document.addEventListener('keydown', (event) => keysDown.add(event.key.toLowerCase()));
 document.addEventListener('keyup', (event) => keysDown.delete(event.key.toLowerCase()));
+
+(window as any).mousePressed = () => {
+	hasToClickForSound = false;
+}
