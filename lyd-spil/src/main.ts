@@ -1,8 +1,11 @@
 /// <reference path="../node_modules/@types/p5/global.d.ts"/>
 
+import { Vector } from "p5";
 import { UFO } from "./ufo";
 
 let objects: UFO[] = [];
+let playerY: number = 0;
+const playerSpeed = 5;
 
 (window as any).setup = () => {
 	createCanvas(windowWidth, windowHeight);
@@ -12,12 +15,15 @@ let objects: UFO[] = [];
 		createVector(0, random(0, height)),
 		createVector(width, random(0, height)),
 	));
+
+	playerY = height / 2;
 }
 
 (window as any).draw = () => {
 	background(255);
 
-	if(frameCount % 60 == 0) objects.push(new UFO(
+	// For testing porpuse
+	if(frameCount % 300 == 0) objects.push(new UFO(
 		createVector(0, random(0, height)),
 		createVector(width, random(0, height)),
 	));
@@ -35,4 +41,18 @@ let objects: UFO[] = [];
 
 		object.live();
 	}
+
+	// Draw player
+	circle(width - 15, playerY, 15);
+
+	// Player movement
+	if(keyIsPressed) {
+		if(keysDown.has('w')) playerY -= playerSpeed;
+		if(keysDown.has('s')) playerY += playerSpeed;
+	}
 }
+
+// Key shit
+const keysDown = new Set();
+document.addEventListener('keydown', (event) => keysDown.add(event.key.toLowerCase()));
+document.addEventListener('keyup', (event) => keysDown.delete(event.key.toLowerCase()));
