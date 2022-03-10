@@ -52,10 +52,11 @@ let hasToClickForSound = true;
 	circle(playerX, playerY, 15);
 
 	// Player movement
-	if(keyIsPressed) {
-		if(keysDown.has('w')) playerY -= playerSpeed;
-		if(keysDown.has('s')) playerY += playerSpeed;
-	}
+	playerY = mouseY;
+	// if(keyIsPressed) {
+	// 	if(keysDown.has('w')) playerY -= playerSpeed;
+	// 	if(keysDown.has('s')) playerY += playerSpeed;
+	// }
 
 	// Click for sound
 	if(hasToClickForSound) {

@@ -43,12 +43,11 @@ window.draw = function () {
     stroke(0);
     circle(exports.playerX, exports.playerY, 15);
     // Player movement
-    if (keyIsPressed) {
-        if (keysDown.has('w'))
-            exports.playerY -= playerSpeed;
-        if (keysDown.has('s'))
-            exports.playerY += playerSpeed;
-    }
+    exports.playerY = mouseY;
+    // if(keyIsPressed) {
+    // 	if(keysDown.has('w')) playerY -= playerSpeed;
+    // 	if(keysDown.has('s')) playerY += playerSpeed;
+    // }
     // Click for sound
     if (hasToClickForSound) {
         fill(255, 50, 50);
