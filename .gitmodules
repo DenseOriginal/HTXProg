@@ -4,3 +4,6 @@
 [submodule "GUI-basic"]
 	path = GUI-basic
 	url = https://github.com/DenseOriginal/GUI-basic
+[submodule "fantastiske-funktioner"]
+	path = fantastiske-funktioner
+	url = https://github.com/DenseOriginal/fantastiske-funktioner
