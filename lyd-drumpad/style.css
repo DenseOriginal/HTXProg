@@ -1,0 +1,26 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+/* Display buttons as a square with a side of 128 pixels */
+button {
+  width: 128px;
+  height: 128px;
+}
+
+/* Display all button in a .container in a grid with 6 columns */
+.container {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(128px, 1fr));
+  grid-gap: 1px;
+  width: fit-content;
+}
