@@ -24,19 +24,29 @@ for (let key in sounds) {
   document.getElementById('container').appendChild(button);
 
   // Give all the buttons a random pastel color
-  button.style.backgroundColor = `hsl(${Math.floor(Math.random() * 360)}, 100%, 90%)`;
+  button.style.setProperty('--color', `hsl(${Math.floor(Math.random() * 360)}, 100%, 90%)`);
 }
 
 
 // Listen for keyboard events, and play the sound when the key is pressed, using the playSound function
 document.addEventListener("keydown", function(event) {
   playSound(event.key);
+  const button = document.querySelector(`button[data-soundkey="${event.key}"]`);
+  if(!button) return;
+  button.classList.add('active');
+});
+
+// Remove active class from all buttons when a key is released
+document.addEventListener("keyup", function(event) {
+  const button = document.querySelector(`button[data-soundkey="${event.key}"]`);
+  if(!button) return;
+  button.classList.remove('active');
 });
 
 // Loop over all buttons and add and event listener to each one
 // When a button is clicked, play the sound associated with the button
 document.querySelectorAll('button').forEach(function(button) {
-  button.addEventListener('click', function() {
+  button.addEventListener('mousedown', function() {
     playSound(button.dataset.soundkey);
   });
 });
