@@ -33,6 +33,7 @@ class Pad {
     
     let button = document.createElement("button");
     button.innerHTML = name;
+    button.style.setProperty('--color', `hsl(${Math.floor(Math.random() * 360)}, 100%, 90%)`);
     document.getElementById('container').appendChild(button);
 
     this.htmlButton = button;
