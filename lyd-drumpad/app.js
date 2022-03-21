@@ -1,3 +1,5 @@
+document.addEventListener('contextmenu', (e) => e.preventDefault())
+
 new Pad('Fuck din far', new AudioFromLink("./sounds/fuck-din-far.mp3"), 1);
 new Pad('Fuck din mor', new AudioFromLink("./sounds/fuck-din-mor.mp3"), 2);
 new Pad('Boom', new AudioFromLink("./sounds/boom.mp3"), 3);

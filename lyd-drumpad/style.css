@@ -2,6 +2,14 @@
   --buttons-size: 80px;
 }
 
+* {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 html,
 body {
   width: 100%;
