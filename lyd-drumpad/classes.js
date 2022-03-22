@@ -44,7 +44,7 @@ class Pad {
     button.addEventListener('mouseup', () => this.audioSource.stop());
 
     // Setup key listeners
-    document.addEventListener("keydown", (e) => { if(e.key == key) { this.audioSource.start(); button.classList.add('active') } });
+    document.addEventListener("keydown", (e) => { if(e.key == key && !e.repeat) { this.audioSource.start(); button.classList.add('active') } });
     document.addEventListener("keyup", (e) => { if(e.key == key) { this.audioSource.stop(); button.classList.remove('active') } });
   }
 }
