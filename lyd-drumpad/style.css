@@ -32,6 +32,7 @@ button {
   position: relative;
   --color: red;
   transition: all 50ms;
+  position: relative;
 }
 
 button:active,
@@ -39,8 +40,8 @@ button.active {
   background-color: var(--color);
 }
 
-button:active::after,
-button.active::after {
+button:active::before,
+button.active::before {
   content: "";
   position: absolute;
   z-index: 99;
@@ -49,6 +50,15 @@ button.active::after {
   width: 100%;
   height: 100%;
   box-shadow: 0 0 20px var(--color);
+}
+
+button::after {
+  content: attr(data-key) " ";
+  position: absolute;
+  z-index: 100;
+  top: 5px;
+  left: 5px;
+  color: #7a7a7a;
 }
 
 /* Display all button in a .container in a grid with 6 columns */

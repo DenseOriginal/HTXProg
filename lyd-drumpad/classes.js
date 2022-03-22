@@ -32,6 +32,7 @@ class Pad {
     this.key = key;
     
     let button = document.createElement("button");
+    button.dataset.key = key;
     button.innerHTML = name;
     button.style.setProperty('--color', `hsl(${Math.floor(Math.random() * 360)}, 100%, 90%)`);
     document.getElementById('container').appendChild(button);
