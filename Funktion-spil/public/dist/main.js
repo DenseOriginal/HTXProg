@@ -8,10 +8,11 @@
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Enemy = void 0;
+var linear_1 = __webpack_require__(2);
 var sinus_1 = __webpack_require__(5);
 var Enemy = /** @class */ (function () {
     function Enemy() {
-        this.path = new sinus_1.SinusPath();
+        this.path = new (random([linear_1.LinearPath, sinus_1.SinusPath]))();
         this.x = 0;
         this.y = this.path.calculate(this.x);
         this.offset = frameCount / 3;
@@ -19,13 +20,13 @@ var Enemy = /** @class */ (function () {
     }
     Enemy.prototype.draw = function () {
         push();
-        noStroke();
-        colorMode(HSB);
-        fill(this.offset % 360, 360, 360);
+        noFill();
+        colorMode(HSB, 100);
+        stroke(this.offset % 100, 100, 80);
         this.y = this.path.calculate(this.x);
         translate(this.x, height - this.y);
         rotate(-this.path.getAngle(this.x));
-        square(0, 0, 50);
+        circle(0, 0, 25);
         pop();
         this.x += 3;
         if (this.x > width)
@@ -43,7 +44,47 @@ exports.Enemy = Enemy;
 
 
 /***/ }),
-/* 2 */,
+/* 2 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LinearPath = void 0;
+var generic_1 = __webpack_require__(3);
+var LinearPath = /** @class */ (function (_super) {
+    __extends(LinearPath, _super);
+    function LinearPath() {
+        var _this = _super.call(this) || this;
+        var x1 = 0;
+        var x2 = width;
+        var randomY1 = random(0, height);
+        var randomY2 = random(0, height);
+        _this.a = (randomY1 - randomY2) / (x1 - x2);
+        _this.b = randomY1;
+        return _this;
+    }
+    LinearPath.prototype.calculate = function (x) {
+        return (this.a * x) + this.b;
+    };
+    return LinearPath;
+}(generic_1.GenericPath));
+exports.LinearPath = LinearPath;
+
+
+/***/ }),
 /* 3 */
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -80,6 +121,8 @@ var Player = /** @class */ (function () {
     }
     Player.prototype.draw = function () {
         push();
+        noStroke();
+        fill(0);
         circle(this.x, this.y, radius * 2);
         pop();
         this.y += this.vel;
@@ -190,10 +233,14 @@ window.setup = function () {
     setInterval(function () { return (focused && new enemy_1.Enemy()); }, 1000);
 };
 window.draw = function () {
-    background(255);
+    background(255, 75);
     enemy_1.Enemy.forEach(function (cur) { return cur.draw(); });
     player.draw();
     player.applyForce(1); // Gravity
+    noStroke();
+    rect(0, 0, 150, 50);
+    text('FPS: ' + frameRate().toFixed(2), 5, 15);
+    text('Enemies: ' + enemy_1.Enemy.enemies.length, 5, 25);
 };
 // Key shit
 document.addEventListener('keydown', function (event) { return keyPressed(event.key.toLowerCase()); });

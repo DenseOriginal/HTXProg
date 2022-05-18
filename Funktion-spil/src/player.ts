@@ -14,6 +14,8 @@ export class Player {
 
   draw() {
     push();
+    noStroke();
+    fill(0);
     circle(this.x, this.y, radius * 2);
     pop();
 
@@ -22,7 +24,6 @@ export class Player {
     this.vel *= 0.95;
     this.acc = 0;
     this.checkBounds();
-    
   }
 
   applyForce(f: number): void {

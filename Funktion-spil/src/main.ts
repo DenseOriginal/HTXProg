@@ -14,11 +14,16 @@ const player = new Player(window.innerWidth - 50);
 }
 
 (window as any).draw = () => {
-	background(255);
+	background(255, 75);
 	Enemy.forEach(cur => cur.draw());
 
 	player.draw();
 	player.applyForce(1); // Gravity
+
+	noStroke();
+	rect(0, 0, 150, 50);
+	text('FPS: ' + frameRate().toFixed(2), 5, 15);
+	text('Enemies: ' + Enemy.enemies.length, 5, 25);
 }
 
 // Key shit

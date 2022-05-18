@@ -17,9 +17,9 @@ export class Enemy {
   draw() {
     push();
 
-    noStroke();
-    colorMode(HSB);
-    fill(this.offset % 360, 360, 360);
+    noFill();
+    colorMode(HSB, 100);
+    stroke(this.offset % 100, 100, 80);
     this.y = this.path.calculate(this.x);
     translate(this.x, height - this.y);
     rotate(-this.path.getAngle(this.x));
