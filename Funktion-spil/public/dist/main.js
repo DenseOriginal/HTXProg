@@ -12,12 +12,13 @@ var enemy_1 = __webpack_require__(1);
 var player_1 = __webpack_require__(6);
 var playerX = window.innerWidth - 50;
 exports.player = new player_1.Player(playerX);
+var lastTimeEnemySpawned = 0;
+var enemySpawnTimer = 1500;
 window.setup = function () {
     createCanvas(windowWidth, windowHeight);
     rectMode(CENTER);
     angleMode(DEGREES);
     new enemy_1.Enemy();
-    setInterval(function () { return (focused && new enemy_1.Enemy()); }, 1000);
 };
 window.draw = function () {
     background(255, 75);
@@ -35,6 +36,17 @@ window.draw = function () {
         enemiesToCheck.push(enemy);
     }
     exports.player.checkCollision(enemiesToCheck);
+    if (millis() - lastTimeEnemySpawned > enemySpawnTimer) {
+        lastTimeEnemySpawned = millis();
+        new enemy_1.Enemy();
+    }
+    enemySpawnTimer = 800 * Math.pow(0.996, (millis() / 1000)) + 200;
+    // UI stuff
+    noStroke();
+    fill(255);
+    rect(0, 0, 200, 50);
+    fill(0);
+    text('Spawn time: ' + enemySpawnTimer.toFixed(1), 5, 10);
 };
 // Key shit
 document.addEventListener('keydown', function (event) { return keyPressed(event.key.toLowerCase()); });

@@ -6,12 +6,14 @@ import { Player, playerRadius } from "./player";
 const playerX = window.innerWidth - 50;
 export const player = new Player(playerX);
 
+let lastTimeEnemySpawned = 0;
+let enemySpawnTimer = 1500;
+
 (window as any).setup = () => {
 	createCanvas(windowWidth, windowHeight);
 	rectMode(CENTER);
 	angleMode(DEGREES);
 	new Enemy();
-	setInterval(() => (focused && new Enemy()), 1000);
 }
 
 (window as any).draw = () => {
@@ -34,6 +36,17 @@ export const player = new Player(playerX);
 	}
 
 	player.checkCollision(enemiesToCheck);
+
+	if(millis() - lastTimeEnemySpawned > enemySpawnTimer) { lastTimeEnemySpawned = millis(); new Enemy(); }
+
+	enemySpawnTimer = 800 * 0.996**(millis() / 1000) + 200;
+
+	// UI stuff
+	noStroke();
+	fill(255);
+	rect(0, 0, 200, 50);
+	fill(0);
+	text('Spawn time: ' + enemySpawnTimer.toFixed(1), 5, 10);
 }
 
 // Key shit
