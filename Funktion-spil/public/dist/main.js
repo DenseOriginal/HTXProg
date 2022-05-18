@@ -258,20 +258,33 @@ exports.Player = exports.playerRadius = void 0;
 var enemy_1 = __webpack_require__(1);
 var speedLimit = 10;
 exports.playerRadius = 10;
+var healtBarPadding = 10;
+var healthBarSize = 20;
 var Player = /** @class */ (function () {
     function Player(x) {
         this.x = x;
         this.y = 0;
+        this.health = 100;
         // Physics stuff
         this.acc = 0;
         this.vel = 0;
+        this.dead = false;
     }
     Player.prototype.draw = function () {
         push();
         noStroke();
         fill(0);
         circle(this.x, this.y, exports.playerRadius * 2);
+        // Healthbar
+        rectMode(CORNER);
+        fill(0, 2);
+        rect(healtBarPadding, height - healtBarPadding - healthBarSize, width - (healtBarPadding * 2), healthBarSize);
+        fill(255, 100, 100);
+        rect(healtBarPadding, height - healtBarPadding - healthBarSize, (width - (healtBarPadding * 2)) * (this.health / 100), healthBarSize);
         pop();
+        // Regenerate
+        if (this.health < 100 && this.health > 0)
+            this.health = min(100, this.health + 0.008);
         this.y += this.vel;
         this.vel = Math.min(this.vel + this.acc, speedLimit);
         this.vel *= 0.95;
@@ -303,6 +316,13 @@ var Player = /** @class */ (function () {
                 shakeElement === null || shakeElement === void 0 ? void 0 : shakeElement.classList.remove('shake');
                 void (shakeElement === null || shakeElement === void 0 ? void 0 : shakeElement.offsetWidth); // Funky trick to allow the screen shake
                 shakeElement === null || shakeElement === void 0 ? void 0 : shakeElement.classList.add('shake');
+                this.health -= 20;
+                if (this.health < 0) {
+                    this.health = 0;
+                    document.getElementById('message').innerText = "You died dumbass...";
+                    this.dead = true;
+                    noCanvas();
+                }
             }
         }
     };

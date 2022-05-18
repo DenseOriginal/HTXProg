@@ -2,13 +2,19 @@ import { Enemy, enemyRadius } from "./enemy";
 
 const speedLimit = 10;
 export const playerRadius = 10;
+const healtBarPadding = 10;
+const healthBarSize = 20;
 
 export class Player {
   public y = 0;
 
+  public health = 100;
+
   // Physics stuff
   private acc = 0;
   private vel = 0;
+
+  public dead = false;
 
   constructor(
     public x: number
@@ -19,7 +25,18 @@ export class Player {
     noStroke();
     fill(0);
     circle(this.x, this.y, playerRadius * 2);
+
+    // Healthbar
+    rectMode(CORNER)
+    fill(0, 2);
+    rect(healtBarPadding, height - healtBarPadding - healthBarSize, width - (healtBarPadding * 2), healthBarSize);
+
+    fill(255, 100, 100);
+    rect(healtBarPadding, height - healtBarPadding - healthBarSize, (width - (healtBarPadding * 2)) * (this.health / 100), healthBarSize);
     pop();
+
+    // Regenerate
+    if (this.health < 100 && this.health > 0) this.health = min(100, this.health + 0.008);
 
     this.y += this.vel;
     this.vel = Math.min(this.vel + this.acc, speedLimit);
@@ -50,6 +67,14 @@ export class Player {
         shakeElement?.classList.remove('shake');
         void shakeElement?.offsetWidth; // Funky trick to allow the screen shake
         shakeElement?.classList.add('shake');
+
+        this.health -= 20;
+        if (this.health < 0) {
+          this.health = 0;
+          (document.getElementById('message') as any).innerText = "You died dumbass...";
+          this.dead = true;
+          noCanvas()
+        }
       }
     }
   }
