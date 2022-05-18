@@ -24,8 +24,6 @@ window.draw = function () {
     enemy_1.Enemy.forEach(function (cur) { return cur.draw(); });
     exports.player.draw();
     exports.player.applyForce(1); // Gravity
-    stroke(0);
-    line((playerX - player_1.playerRadius), 0, (playerX - player_1.playerRadius), height);
     // Find all enemies that are close enough to the player
     var enemiesToCheck = [];
     for (var idx = 0; idx < enemy_1.Enemy.enemies.length; idx++) {
@@ -37,10 +35,6 @@ window.draw = function () {
         enemiesToCheck.push(enemy);
     }
     exports.player.checkCollision(enemiesToCheck);
-    noStroke();
-    rect(0, 0, 150, 50);
-    text('FPS: ' + frameRate().toFixed(2), 5, 15);
-    text('Enemies: ' + enemy_1.Enemy.enemies.length, 5, 25);
 };
 // Key shit
 document.addEventListener('keydown', function (event) { return keyPressed(event.key.toLowerCase()); });

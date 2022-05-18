@@ -21,9 +21,6 @@ export const player = new Player(playerX);
 	player.draw();
 	player.applyForce(1); // Gravity
 
-	stroke(0);
-	line((playerX - playerRadius), 0, (playerX - playerRadius), height);
-
 	// Find all enemies that are close enough to the player
 	const enemiesToCheck: Enemy[] = [];
 	for(let idx = 0; idx < Enemy.enemies.length; idx++) {
@@ -37,11 +34,6 @@ export const player = new Player(playerX);
 	}
 
 	player.checkCollision(enemiesToCheck);
-
-	noStroke();
-	rect(0, 0, 150, 50);
-	text('FPS: ' + frameRate().toFixed(2), 5, 15);
-	text('Enemies: ' + Enemy.enemies.length, 5, 25);
 }
 
 // Key shit
