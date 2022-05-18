@@ -101,6 +101,47 @@ var GenericPath = /** @class */ (function () {
 exports.GenericPath = GenericPath;
 
 
+/***/ }),
+/* 4 */
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Player = void 0;
+var speedLimit = 10;
+var radius = 10;
+var Player = /** @class */ (function () {
+    function Player(x) {
+        this.x = x;
+        this.y = 0;
+        // Physics stuff
+        this.acc = 0;
+        this.vel = 0;
+    }
+    Player.prototype.draw = function () {
+        push();
+        circle(this.x, this.y, radius * 2);
+        pop();
+        this.y += this.vel;
+        this.vel = Math.min(this.vel + this.acc, speedLimit);
+        this.vel *= 0.95;
+        this.acc = 0;
+        this.checkBounds();
+    };
+    Player.prototype.applyForce = function (f) {
+        this.acc += f;
+    };
+    Player.prototype.checkBounds = function () {
+        if (this.y < radius) {
+            this.vel *= -1;
+            this.y = radius;
+        }
+    };
+    return Player;
+}());
+exports.Player = Player;
+
+
 /***/ })
 /******/ 	]);
 /************************************************************************/
@@ -137,6 +178,8 @@ var exports = __webpack_exports__;
 /// <reference path="../node_modules/@types/p5/global.d.ts"/>
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var enemy_1 = __webpack_require__(1);
+var player_1 = __webpack_require__(4);
+var player = new player_1.Player(window.innerWidth - 50);
 window.setup = function () {
     createCanvas(windowWidth, windowHeight);
     rectMode(CENTER);
@@ -147,7 +190,16 @@ window.setup = function () {
 window.draw = function () {
     background(255);
     enemy_1.Enemy.forEach(function (cur) { return cur.draw(); });
+    player.draw();
+    player.applyForce(1); // Gravity
 };
+// Key shit
+document.addEventListener('keydown', function (event) { return keyPressed(event.key.toLowerCase()); });
+function keyPressed(key) {
+    if (key == " ") {
+        player.applyForce(-20); // Jumpforce upwards
+    }
+}
 
 })();
 
