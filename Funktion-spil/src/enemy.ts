@@ -2,10 +2,12 @@ import { GenericPath } from "./paths/generic";
 import { LinearPath } from "./paths/linear";
 import { SinusPath } from "./paths/sinus";
 
+export const enemyRadius = 12.5;
+
 export class Enemy {
   private path: GenericPath = new (random([LinearPath, SinusPath]))();
-  private x = 0;
-  private y = this.path.calculate(this.x);
+  public x = 0;
+  public y = this.path.calculate(this.x);
 
   private offset = frameCount / 3;
 
@@ -23,7 +25,7 @@ export class Enemy {
     this.y = this.path.calculate(this.x);
     translate(this.x, height - this.y);
     rotate(-this.path.getAngle(this.x));
-    circle(0, 0, 25);
+    circle(0, 0, enemyRadius * 2);
 
     pop();
 
@@ -31,6 +33,11 @@ export class Enemy {
     this.x += 3;
 
     if(this.x > width) Enemy.removeSelf(this);
+  }
+
+  colide() {
+    console.log('Dead');
+    Enemy.removeSelf(this);
   }
 
   static enemies: Enemy[] = [];

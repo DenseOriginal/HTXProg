@@ -7,9 +7,10 @@
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Enemy = void 0;
+exports.Enemy = exports.enemyRadius = void 0;
 var linear_1 = __webpack_require__(2);
 var sinus_1 = __webpack_require__(5);
+exports.enemyRadius = 12.5;
 var Enemy = /** @class */ (function () {
     function Enemy() {
         this.path = new (random([linear_1.LinearPath, sinus_1.SinusPath]))();
@@ -26,11 +27,15 @@ var Enemy = /** @class */ (function () {
         this.y = this.path.calculate(this.x);
         translate(this.x, height - this.y);
         rotate(-this.path.getAngle(this.x));
-        circle(0, 0, 25);
+        circle(0, 0, exports.enemyRadius * 2);
         pop();
         this.x += 3;
         if (this.x > width)
             Enemy.removeSelf(this);
+    };
+    Enemy.prototype.colide = function () {
+        console.log('Dead');
+        Enemy.removeSelf(this);
     };
     Enemy.removeSelf = function (t) {
         var index = Enemy.enemies.indexOf(t);
@@ -104,13 +109,14 @@ exports.GenericPath = GenericPath;
 
 /***/ }),
 /* 4 */
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Player = void 0;
+exports.Player = exports.playerRadius = void 0;
+var enemy_1 = __webpack_require__(1);
 var speedLimit = 10;
-var radius = 10;
+exports.playerRadius = 10;
 var Player = /** @class */ (function () {
     function Player(x) {
         this.x = x;
@@ -123,7 +129,7 @@ var Player = /** @class */ (function () {
         push();
         noStroke();
         fill(0);
-        circle(this.x, this.y, radius * 2);
+        circle(this.x, this.y, exports.playerRadius * 2);
         pop();
         this.y += this.vel;
         this.vel = Math.min(this.vel + this.acc, speedLimit);
@@ -135,9 +141,23 @@ var Player = /** @class */ (function () {
         this.acc += f;
     };
     Player.prototype.checkBounds = function () {
-        if (this.y < radius) {
+        if (this.y < exports.playerRadius) {
             this.vel *= -1;
-            this.y = radius;
+            this.y = exports.playerRadius;
+        }
+        if (this.y > height - exports.playerRadius) {
+            this.vel *= -0.7;
+            this.y = height - exports.playerRadius;
+        }
+    };
+    Player.prototype.checkCollision = function (enemies) {
+        var minDistSq = sq(exports.playerRadius + enemy_1.enemyRadius);
+        for (var _i = 0, enemies_1 = enemies; _i < enemies_1.length; _i++) {
+            var enemy = enemies_1[_i];
+            // line(this.x, this.y, enemy.x, height - enemy.y); // Debug
+            var distToEnemySq = sq(this.x - enemy.x) + sq(this.y - (height - enemy.y));
+            if (distToEnemySq < minDistSq)
+                enemy.colide();
         }
     };
     return Player;
@@ -224,19 +244,33 @@ var exports = __webpack_exports__;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var enemy_1 = __webpack_require__(1);
 var player_1 = __webpack_require__(4);
-var player = new player_1.Player(window.innerWidth - 50);
+var playerX = window.innerWidth - 50;
+var player = new player_1.Player(playerX);
 window.setup = function () {
     createCanvas(windowWidth, windowHeight);
     rectMode(CENTER);
     angleMode(DEGREES);
     new enemy_1.Enemy();
-    setInterval(function () { return (focused && new enemy_1.Enemy()); }, 1000);
+    setInterval(function () { return (focused && new enemy_1.Enemy()); }, 200);
 };
 window.draw = function () {
     background(255, 75);
     enemy_1.Enemy.forEach(function (cur) { return cur.draw(); });
     player.draw();
     player.applyForce(1); // Gravity
+    stroke(0);
+    line((playerX - player_1.playerRadius), 0, (playerX - player_1.playerRadius), height);
+    // Find all enemies that are close enough to the player
+    var enemiesToCheck = [];
+    for (var idx = 0; idx < enemy_1.Enemy.enemies.length; idx++) {
+        var enemy = enemy_1.Enemy.enemies[idx];
+        // If the enemy isn't close enough to the player, break out of the loop
+        // All the enemies have the same speed, so we can be sure all the enemies are in sequential order
+        if (enemy.x + enemy_1.enemyRadius < (playerX - player_1.playerRadius))
+            break;
+        enemiesToCheck.push(enemy);
+    }
+    player.checkCollision(enemiesToCheck);
     noStroke();
     rect(0, 0, 150, 50);
     text('FPS: ' + frameRate().toFixed(2), 5, 15);

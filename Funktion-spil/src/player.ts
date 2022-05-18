@@ -1,5 +1,7 @@
+import { Enemy, enemyRadius } from "./enemy";
+
 const speedLimit = 10;
-const radius = 10;
+export const playerRadius = 10;
 
 export class Player {
   private y = 0;
@@ -16,7 +18,7 @@ export class Player {
     push();
     noStroke();
     fill(0);
-    circle(this.x, this.y, radius * 2);
+    circle(this.x, this.y, playerRadius * 2);
     pop();
 
     this.y += this.vel;
@@ -31,6 +33,17 @@ export class Player {
   }
 
   private checkBounds() {
-    if (this.y < radius) { this.vel *= -1; this.y = radius; }
+    if (this.y < playerRadius) { this.vel *= -1; this.y = playerRadius; }
+    if (this.y > height - playerRadius) { this.vel *= -0.7; this.y = height - playerRadius; }
+  }
+
+  checkCollision(enemies: Enemy[]): void {
+    const minDistSq = sq(playerRadius + enemyRadius);
+
+    for(const enemy of enemies) {
+      // line(this.x, this.y, enemy.x, height - enemy.y); // Debug
+      const distToEnemySq = sq(this.x - enemy.x) + sq(this.y - (height - enemy.y))
+      if(distToEnemySq < minDistSq) enemy.colide();
+    }
   }
 }
