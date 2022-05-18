@@ -17,6 +17,17 @@ body {
     animation: shake 0.5s; 
 }
 
+.shake::after {
+    content: "";
+    width: 110%;
+    height: 110%;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    z-index: 1;
+    animation: fade-out-red 0.5s;
+}
+
 @keyframes shake {
     0% { transform: translate(0.5px, 0.5px) rotate(0deg); }
     10% { transform: translate(-0.5px, -1px) rotate(-0.5deg); }
@@ -29,4 +40,17 @@ body {
     80% { transform: translate(-0.5px, -0.5px) rotate(0.5deg); }
     90% { transform: translate(0.5px, 1px) rotate(0deg); }
     100% { transform: translate(0.5px, -1px) rotate(-0.5deg); }
+}
+
+@keyframes fade-out-red {
+    0% {
+        background-color: red;
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+    }
 }

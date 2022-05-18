@@ -287,10 +287,10 @@ var Player = /** @class */ (function () {
             var distToEnemySq = sq(this.x - enemy.x) + sq(this.y - (height - enemy.y));
             if (distToEnemySq < minDistSq) {
                 enemy.colide();
-                var canvas = document.getElementById('defaultCanvas0');
-                canvas === null || canvas === void 0 ? void 0 : canvas.classList.remove('shake');
-                void (canvas === null || canvas === void 0 ? void 0 : canvas.offsetWidth); // Funky trick to allow the screen shake
-                canvas === null || canvas === void 0 ? void 0 : canvas.classList.add('shake');
+                var shakeElement = document.body;
+                shakeElement === null || shakeElement === void 0 ? void 0 : shakeElement.classList.remove('shake');
+                void (shakeElement === null || shakeElement === void 0 ? void 0 : shakeElement.offsetWidth); // Funky trick to allow the screen shake
+                shakeElement === null || shakeElement === void 0 ? void 0 : shakeElement.classList.add('shake');
             }
         }
     };

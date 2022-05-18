@@ -46,10 +46,10 @@ export class Player {
       if(distToEnemySq < minDistSq) {
         enemy.colide();
 
-        const canvas = document.getElementById('defaultCanvas0');
-        canvas?.classList.remove('shake');
-        void canvas?.offsetWidth; // Funky trick to allow the screen shake
-        canvas?.classList.add('shake');
+        const shakeElement = document.body;
+        shakeElement?.classList.remove('shake');
+        void shakeElement?.offsetWidth; // Funky trick to allow the screen shake
+        shakeElement?.classList.add('shake');
       }
     }
   }
