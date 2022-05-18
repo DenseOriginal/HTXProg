@@ -58,10 +58,10 @@ function keyPressed(key) {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Enemy = exports.enemyRadius = void 0;
-var main_1 = __webpack_require__(0);
 var exponential_1 = __webpack_require__(2);
 var linear_1 = __webpack_require__(4);
 var sinus_1 = __webpack_require__(5);
+var score_service_1 = __webpack_require__(7);
 exports.enemyRadius = 12.5;
 var Enemy = /** @class */ (function () {
     function Enemy() {
@@ -69,6 +69,7 @@ var Enemy = /** @class */ (function () {
         this.x = 0;
         this.y = this.path.calculate(this.x);
         this.offset = frameCount / 3;
+        this.scoreService = score_service_1.ScoreService.Instance;
         Enemy.enemies.push(this);
     }
     Enemy.prototype.draw = function () {
@@ -83,7 +84,7 @@ var Enemy = /** @class */ (function () {
         pop();
         this.x += 3;
         if (this.x > width) {
-            main_1.player.score += 100;
+            this.scoreService.increment(100);
             Enemy.removeSelf(this);
         }
     };
@@ -253,6 +254,7 @@ exports.SinusPath = SinusPath;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Player = exports.playerRadius = void 0;
 var enemy_1 = __webpack_require__(1);
+var score_service_1 = __webpack_require__(7);
 var speedLimit = 10;
 exports.playerRadius = 10;
 var healtBarPadding = 10;
@@ -266,7 +268,7 @@ var Player = /** @class */ (function () {
         this.acc = 0;
         this.vel = 0;
         this.dead = false;
-        this.score = 0;
+        this.scoreService = score_service_1.ScoreService.Instance;
     }
     Player.prototype.draw = function () {
         push();
@@ -282,7 +284,7 @@ var Player = /** @class */ (function () {
         // Score
         fill(0);
         textAlign(LEFT, BOTTOM);
-        text('Score: ' + this.score, healtBarPadding, height - healtBarPadding - healthBarSize - 5);
+        text('Score: ' + this.scoreService.score, healtBarPadding, height - healtBarPadding - healthBarSize - 5);
         pop();
         // Regenerate
         if (this.health < 100 && this.health > 0)
@@ -307,7 +309,6 @@ var Player = /** @class */ (function () {
         }
     };
     Player.prototype.checkCollision = function (enemies) {
-        var _a;
         var minDistSq = sq(exports.playerRadius + enemy_1.enemyRadius);
         for (var _i = 0, enemies_1 = enemies; _i < enemies_1.length; _i++) {
             var enemy = enemies_1[_i];
@@ -322,11 +323,8 @@ var Player = /** @class */ (function () {
                 this.health -= 20;
                 if (this.health < 0) {
                     this.health = 0;
-                    (_a = document.getElementById('game-over')) === null || _a === void 0 ? void 0 : _a.removeAttribute('hidden');
-                    document.getElementById('score').innerText = this.score;
                     this.dead = true;
-                    noCanvas();
-                    noLoop();
+                    this.scoreService.endGame();
                 }
             }
         }
@@ -334,6 +332,59 @@ var Player = /** @class */ (function () {
     return Player;
 }());
 exports.Player = Player;
+
+
+/***/ }),
+/* 7 */
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ScoreService = void 0;
+var ScoreService = /** @class */ (function () {
+    function ScoreService() {
+        this._score = 0;
+    }
+    Object.defineProperty(ScoreService.prototype, "score", {
+        get: function () { return this._score; },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(ScoreService.prototype, "highscore", {
+        get: function () {
+            return parseInt(localStorage.getItem('fngame-highscore') || '0');
+        },
+        set: function (score) {
+            localStorage.setItem('fngame-highscore', score.toString());
+        },
+        enumerable: false,
+        configurable: true
+    });
+    ScoreService.prototype.increment = function (n) { this._score += n; };
+    ScoreService.prototype.decrement = function (n) { this._score -= n; };
+    ScoreService.prototype.endGame = function () {
+        var _a;
+        if (this.highscore < this._score)
+            this.highscore = this._score;
+        (_a = document.getElementById('game-over')) === null || _a === void 0 ? void 0 : _a.removeAttribute('hidden');
+        document.getElementById('score').innerText = this._score;
+        document.getElementById('highscore').innerText = this.highscore;
+        noCanvas();
+        noLoop();
+    };
+    Object.defineProperty(ScoreService, "Instance", {
+        get: function () {
+            // If the class hasn't been instantiated, then do it
+            if (!this.singletonInstance)
+                this.singletonInstance = new this();
+            return this.singletonInstance;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return ScoreService;
+}());
+exports.ScoreService = ScoreService;
 
 
 /***/ })

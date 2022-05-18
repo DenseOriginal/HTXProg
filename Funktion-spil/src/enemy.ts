@@ -3,6 +3,7 @@ import { ExponentialPath } from "./paths/exponential";
 import { GenericPath } from "./paths/generic";
 import { LinearPath } from "./paths/linear";
 import { SinusPath } from "./paths/sinus";
+import { ScoreService } from "./score.service";
 
 export const enemyRadius = 12.5;
 
@@ -13,6 +14,7 @@ export class Enemy {
 
   private offset = frameCount / 3;
 
+  private scoreService = ScoreService.Instance;
 
   constructor() {
     Enemy.enemies.push(this);
@@ -35,7 +37,7 @@ export class Enemy {
     this.x += 3;
 
     if(this.x > width) {
-      player.score += 100;
+      this.scoreService.increment(100);
       Enemy.removeSelf(this);
     }
   }

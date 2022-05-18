@@ -1,4 +1,5 @@
 import { Enemy, enemyRadius } from "./enemy";
+import { ScoreService } from "./score.service";
 
 const speedLimit = 10;
 export const playerRadius = 10;
@@ -16,7 +17,7 @@ export class Player {
 
   public dead = false;
 
-  public score = 0;
+  private scoreService = ScoreService.Instance;
 
   constructor(
     public x: number
@@ -39,7 +40,7 @@ export class Player {
     // Score
     fill(0);
     textAlign(LEFT, BOTTOM);
-    text('Score: ' + this.score, healtBarPadding, height - healtBarPadding - healthBarSize - 5);
+    text('Score: ' + this.scoreService.score, healtBarPadding, height - healtBarPadding - healthBarSize - 5);
 
     pop();
 
@@ -80,11 +81,8 @@ export class Player {
         this.health -= 20;
         if (this.health < 0) {
           this.health = 0;
-          document.getElementById('game-over')?.removeAttribute('hidden');
-          (document.getElementById('score') as any).innerText = this.score;
           this.dead = true;
-          noCanvas();
-          noLoop();
+          this.scoreService.endGame();
         }
       }
     }
