@@ -185,7 +185,7 @@ window.setup = function () {
     rectMode(CENTER);
     angleMode(DEGREES);
     new enemy_1.Enemy();
-    setInterval(function () { return new enemy_1.Enemy(); }, 200);
+    setInterval(function () { return (focused && new enemy_1.Enemy()); }, 200);
 };
 window.draw = function () {
     background(255);
