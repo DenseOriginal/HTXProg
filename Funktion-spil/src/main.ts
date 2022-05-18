@@ -4,7 +4,7 @@ import { Enemy, enemyRadius } from "./enemy";
 import { Player, playerRadius } from "./player";
 
 const playerX = window.innerWidth - 50;
-export const player = new Player(playerX);
+export const player = new Player(playerX, window.innerHeight / 2);
 
 let lastTimeEnemySpawned = 0;
 let enemySpawnTimer = 1500;
@@ -46,6 +46,7 @@ let enemySpawnTimer = 1500;
 document.addEventListener('keydown', (event) => keyPressed(event.key.toLowerCase()));
 function keyPressed(key: string) {
 	if(key == " ") {
+		player.usePhysics = true;
 		player.applyForce(-20); // Jumpforce upwards
 	}
 }

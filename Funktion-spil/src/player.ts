@@ -7,20 +7,20 @@ const healtBarPadding = 10;
 const healthBarSize = 20;
 
 export class Player {
-  public y = 0;
-
   public health = 100;
 
   // Physics stuff
   private acc = 0;
   private vel = 0;
+  public usePhysics = false; // Only apply physics after first space click
 
   public dead = false;
 
   private scoreService = ScoreService.Instance;
 
   constructor(
-    public x: number
+    public x: number,
+    public y: number
   ) { }
 
   draw() {
@@ -42,6 +42,13 @@ export class Player {
     textAlign(LEFT, BOTTOM);
     text('Score: ' + this.scoreService.score, healtBarPadding, height - healtBarPadding - healthBarSize - 5);
 
+
+    // Click spacebar to start
+    if(!this.usePhysics) {
+      textAlign(RIGHT, CENTER);
+      text('Press SPACEBAR to jump', this.x - playerRadius -5, this.y);
+    }
+
     pop();
 
 
@@ -56,12 +63,13 @@ export class Player {
   }
 
   applyForce(f: number): void {
+    if(!this.usePhysics) return;
     this.acc += f;
   }
 
   private checkBounds() {
     if (this.y < playerRadius) { this.vel *= -1; this.y = playerRadius; }
-    if (this.y > height - playerRadius) { this.vel *= -0.7; this.y = height - playerRadius; }
+    if (this.y > height + (playerRadius * 2)) this.scoreService.endGame();
   }
 
   checkCollision(enemies: Enemy[]): void {

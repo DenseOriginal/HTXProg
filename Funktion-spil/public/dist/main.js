@@ -11,7 +11,7 @@ exports.player = void 0;
 var enemy_1 = __webpack_require__(1);
 var player_1 = __webpack_require__(6);
 var playerX = window.innerWidth - 50;
-exports.player = new player_1.Player(playerX);
+exports.player = new player_1.Player(playerX, window.innerHeight / 2);
 var lastTimeEnemySpawned = 0;
 var enemySpawnTimer = 1500;
 window.setup = function () {
@@ -46,6 +46,7 @@ window.draw = function () {
 document.addEventListener('keydown', function (event) { return keyPressed(event.key.toLowerCase()); });
 function keyPressed(key) {
     if (key == " ") {
+        exports.player.usePhysics = true;
         exports.player.applyForce(-20); // Jumpforce upwards
     }
 }
@@ -260,13 +261,14 @@ exports.playerRadius = 10;
 var healtBarPadding = 10;
 var healthBarSize = 20;
 var Player = /** @class */ (function () {
-    function Player(x) {
+    function Player(x, y) {
         this.x = x;
-        this.y = 0;
+        this.y = y;
         this.health = 100;
         // Physics stuff
         this.acc = 0;
         this.vel = 0;
+        this.usePhysics = false; // Only apply physics after first space click
         this.dead = false;
         this.scoreService = score_service_1.ScoreService.Instance;
     }
@@ -285,6 +287,11 @@ var Player = /** @class */ (function () {
         fill(0);
         textAlign(LEFT, BOTTOM);
         text('Score: ' + this.scoreService.score, healtBarPadding, height - healtBarPadding - healthBarSize - 5);
+        // Click spacebar to start
+        if (!this.usePhysics) {
+            textAlign(RIGHT, CENTER);
+            text('Press SPACEBAR to jump', this.x - exports.playerRadius - 5, this.y);
+        }
         pop();
         // Regenerate
         if (this.health < 100 && this.health > 0)
@@ -296,6 +303,8 @@ var Player = /** @class */ (function () {
         this.checkBounds();
     };
     Player.prototype.applyForce = function (f) {
+        if (!this.usePhysics)
+            return;
         this.acc += f;
     };
     Player.prototype.checkBounds = function () {
@@ -303,10 +312,8 @@ var Player = /** @class */ (function () {
             this.vel *= -1;
             this.y = exports.playerRadius;
         }
-        if (this.y > height - exports.playerRadius) {
-            this.vel *= -0.7;
-            this.y = height - exports.playerRadius;
-        }
+        if (this.y > height + (exports.playerRadius * 2))
+            this.scoreService.endGame();
     };
     Player.prototype.checkCollision = function (enemies) {
         var minDistSq = sq(exports.playerRadius + enemy_1.enemyRadius);
