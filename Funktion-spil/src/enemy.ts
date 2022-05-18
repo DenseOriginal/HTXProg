@@ -3,7 +3,7 @@ import { LinearPath } from "./paths/linear";
 import { SinusPath } from "./paths/sinus";
 
 export class Enemy {
-  private path: GenericPath = new SinusPath();
+  private path: GenericPath = new (random([LinearPath, SinusPath]))();
   private x = 0;
   private y = this.path.calculate(this.x);
 
@@ -23,7 +23,7 @@ export class Enemy {
     this.y = this.path.calculate(this.x);
     translate(this.x, height - this.y);
     rotate(-this.path.getAngle(this.x));
-    square(0, 0, 50);
+    circle(0, 0, 25);
 
     pop();
 
