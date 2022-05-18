@@ -4,14 +4,14 @@ const speedLimit = 10;
 export const playerRadius = 10;
 
 export class Player {
-  private y = 0;
+  public y = 0;
 
   // Physics stuff
   private acc = 0;
   private vel = 0;
 
   constructor(
-    private x: number
+    public x: number
   ) { }
 
   draw() {

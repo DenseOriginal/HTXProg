@@ -4,14 +4,14 @@ import { Enemy, enemyRadius } from "./enemy";
 import { Player, playerRadius } from "./player";
 
 const playerX = window.innerWidth - 50;
-const player = new Player(playerX);
+export const player = new Player(playerX);
 
 (window as any).setup = () => {
 	createCanvas(windowWidth, windowHeight);
 	rectMode(CENTER);
 	angleMode(DEGREES);
 	new Enemy();
-	setInterval(() => (focused && new Enemy()), 200);
+	setInterval(() => (focused && new Enemy()), 1000);
 }
 
 (window as any).draw = () => {

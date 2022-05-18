@@ -1,3 +1,4 @@
+import { ExponentialPath } from "./paths/exponential";
 import { GenericPath } from "./paths/generic";
 import { LinearPath } from "./paths/linear";
 import { SinusPath } from "./paths/sinus";
@@ -5,7 +6,7 @@ import { SinusPath } from "./paths/sinus";
 export const enemyRadius = 12.5;
 
 export class Enemy {
-  private path: GenericPath = new (random([LinearPath, SinusPath]))();
+  private path: GenericPath = new (random([LinearPath, SinusPath, ExponentialPath]))();
   public x = 0;
   public y = this.path.calculate(this.x);
 
