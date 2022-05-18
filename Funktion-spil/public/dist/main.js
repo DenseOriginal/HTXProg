@@ -64,6 +64,7 @@ function keyPressed(key) {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Enemy = exports.enemyRadius = void 0;
+var main_1 = __webpack_require__(0);
 var exponential_1 = __webpack_require__(2);
 var linear_1 = __webpack_require__(4);
 var sinus_1 = __webpack_require__(5);
@@ -87,8 +88,10 @@ var Enemy = /** @class */ (function () {
         circle(0, 0, exports.enemyRadius * 2);
         pop();
         this.x += 3;
-        if (this.x > width)
+        if (this.x > width) {
+            main_1.player.score += 100;
             Enemy.removeSelf(this);
+        }
     };
     Enemy.prototype.colide = function () {
         console.log('Dead');
@@ -269,6 +272,7 @@ var Player = /** @class */ (function () {
         this.acc = 0;
         this.vel = 0;
         this.dead = false;
+        this.score = 0;
     }
     Player.prototype.draw = function () {
         push();
@@ -305,6 +309,7 @@ var Player = /** @class */ (function () {
         }
     };
     Player.prototype.checkCollision = function (enemies) {
+        var _a;
         var minDistSq = sq(exports.playerRadius + enemy_1.enemyRadius);
         for (var _i = 0, enemies_1 = enemies; _i < enemies_1.length; _i++) {
             var enemy = enemies_1[_i];
@@ -319,9 +324,11 @@ var Player = /** @class */ (function () {
                 this.health -= 20;
                 if (this.health < 0) {
                     this.health = 0;
-                    document.getElementById('message').innerText = "You died dumbass...";
+                    (_a = document.getElementById('game-over')) === null || _a === void 0 ? void 0 : _a.removeAttribute('hidden');
+                    document.getElementById('score').innerText = this.score;
                     this.dead = true;
                     noCanvas();
+                    noLoop();
                 }
             }
         }

@@ -16,6 +16,8 @@ export class Player {
 
   public dead = false;
 
+  public score = 0;
+
   constructor(
     public x: number
   ) { }
@@ -71,9 +73,11 @@ export class Player {
         this.health -= 20;
         if (this.health < 0) {
           this.health = 0;
-          (document.getElementById('message') as any).innerText = "You died dumbass...";
+          document.getElementById('game-over')?.removeAttribute('hidden');
+          (document.getElementById('score') as any).innerText = this.score;
           this.dead = true;
-          noCanvas()
+          noCanvas();
+          noLoop();
         }
       }
     }

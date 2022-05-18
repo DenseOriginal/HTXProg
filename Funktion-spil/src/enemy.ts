@@ -1,3 +1,4 @@
+import { player } from "./main";
 import { ExponentialPath } from "./paths/exponential";
 import { GenericPath } from "./paths/generic";
 import { LinearPath } from "./paths/linear";
@@ -33,7 +34,10 @@ export class Enemy {
     
     this.x += 3;
 
-    if(this.x > width) Enemy.removeSelf(this);
+    if(this.x > width) {
+      player.score += 100;
+      Enemy.removeSelf(this);
+    }
   }
 
   colide() {
