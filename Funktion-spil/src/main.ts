@@ -10,7 +10,7 @@ const player = new Player(window.innerWidth - 50);
 	rectMode(CENTER);
 	angleMode(DEGREES);
 	new Enemy();
-	setInterval(() => (focused && new Enemy()), 200);
+	setInterval(() => (focused && new Enemy()), 1000);
 }
 
 (window as any).draw = () => {

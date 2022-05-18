@@ -1,8 +1,9 @@
 import { GenericPath } from "./paths/generic";
 import { LinearPath } from "./paths/linear";
+import { SinusPath } from "./paths/sinus";
 
 export class Enemy {
-  private path: GenericPath = new LinearPath();
+  private path: GenericPath = new SinusPath();
   private x = 0;
   private y = this.path.calculate(this.x);
 
