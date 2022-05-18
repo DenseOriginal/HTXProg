@@ -43,7 +43,14 @@ export class Player {
     for(const enemy of enemies) {
       // line(this.x, this.y, enemy.x, height - enemy.y); // Debug
       const distToEnemySq = sq(this.x - enemy.x) + sq(this.y - (height - enemy.y))
-      if(distToEnemySq < minDistSq) enemy.colide();
+      if(distToEnemySq < minDistSq) {
+        enemy.colide();
+
+        const canvas = document.getElementById('defaultCanvas0');
+        canvas?.classList.remove('shake');
+        void canvas?.offsetWidth; // Funky trick to allow the screen shake
+        canvas?.classList.add('shake');
+      }
     }
   }
 }

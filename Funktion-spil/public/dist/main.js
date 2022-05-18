@@ -285,8 +285,13 @@ var Player = /** @class */ (function () {
             var enemy = enemies_1[_i];
             // line(this.x, this.y, enemy.x, height - enemy.y); // Debug
             var distToEnemySq = sq(this.x - enemy.x) + sq(this.y - (height - enemy.y));
-            if (distToEnemySq < minDistSq)
+            if (distToEnemySq < minDistSq) {
                 enemy.colide();
+                var canvas = document.getElementById('defaultCanvas0');
+                canvas === null || canvas === void 0 ? void 0 : canvas.classList.remove('shake');
+                void (canvas === null || canvas === void 0 ? void 0 : canvas.offsetWidth); // Funky trick to allow the screen shake
+                canvas === null || canvas === void 0 ? void 0 : canvas.classList.add('shake');
+            }
         }
     };
     return Player;
