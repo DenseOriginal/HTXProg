@@ -89,7 +89,7 @@ var Enemy = /** @class */ (function () {
         }
     };
     Enemy.prototype.colide = function () {
-        console.log('Dead');
+        this.scoreService.decrement(300);
         Enemy.removeSelf(this);
     };
     Enemy.removeSelf = function (t) {

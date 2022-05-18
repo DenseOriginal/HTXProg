@@ -43,7 +43,7 @@ export class Enemy {
   }
 
   colide() {
-    console.log('Dead');
+    this.scoreService.decrement(300);
     Enemy.removeSelf(this);
   }
 
