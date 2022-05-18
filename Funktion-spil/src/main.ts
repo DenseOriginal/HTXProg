@@ -40,13 +40,6 @@ let enemySpawnTimer = 1500;
 	if(millis() - lastTimeEnemySpawned > enemySpawnTimer) { lastTimeEnemySpawned = millis(); new Enemy(); }
 
 	enemySpawnTimer = 800 * 0.996**(millis() / 1000) + 200;
-
-	// UI stuff
-	noStroke();
-	fill(255);
-	rect(0, 0, 200, 50);
-	fill(0);
-	text('Spawn time: ' + enemySpawnTimer.toFixed(1), 5, 10);
 }
 
 // Key shit

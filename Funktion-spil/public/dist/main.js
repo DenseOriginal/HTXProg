@@ -41,12 +41,6 @@ window.draw = function () {
         new enemy_1.Enemy();
     }
     enemySpawnTimer = 800 * Math.pow(0.996, (millis() / 1000)) + 200;
-    // UI stuff
-    noStroke();
-    fill(255);
-    rect(0, 0, 200, 50);
-    fill(0);
-    text('Spawn time: ' + enemySpawnTimer.toFixed(1), 5, 10);
 };
 // Key shit
 document.addEventListener('keydown', function (event) { return keyPressed(event.key.toLowerCase()); });
@@ -285,6 +279,10 @@ var Player = /** @class */ (function () {
         rect(healtBarPadding, height - healtBarPadding - healthBarSize, width - (healtBarPadding * 2), healthBarSize);
         fill(255, 100, 100);
         rect(healtBarPadding, height - healtBarPadding - healthBarSize, (width - (healtBarPadding * 2)) * (this.health / 100), healthBarSize);
+        // Score
+        fill(0);
+        textAlign(LEFT, BOTTOM);
+        text('Score: ' + this.score, healtBarPadding, height - healtBarPadding - healthBarSize - 5);
         pop();
         // Regenerate
         if (this.health < 100 && this.health > 0)

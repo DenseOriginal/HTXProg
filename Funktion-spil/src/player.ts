@@ -35,7 +35,14 @@ export class Player {
 
     fill(255, 100, 100);
     rect(healtBarPadding, height - healtBarPadding - healthBarSize, (width - (healtBarPadding * 2)) * (this.health / 100), healthBarSize);
+    
+    // Score
+    fill(0);
+    textAlign(LEFT, BOTTOM);
+    text('Score: ' + this.score, healtBarPadding, height - healtBarPadding - healthBarSize - 5);
+
     pop();
+
 
     // Regenerate
     if (this.health < 100 && this.health > 0) this.health = min(100, this.health + 0.008);
