@@ -9,7 +9,7 @@
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.player = void 0;
 var enemy_1 = __webpack_require__(1);
-var player_1 = __webpack_require__(6);
+var player_1 = __webpack_require__(7);
 var playerX = window.innerWidth - 50;
 exports.player = new player_1.Player(playerX, window.innerHeight / 2);
 var lastTimeEnemySpawned = 0;
@@ -62,7 +62,7 @@ exports.Enemy = exports.enemyRadius = void 0;
 var exponential_1 = __webpack_require__(2);
 var linear_1 = __webpack_require__(4);
 var sinus_1 = __webpack_require__(5);
-var score_service_1 = __webpack_require__(7);
+var score_service_1 = __webpack_require__(6);
 exports.enemyRadius = 12.5;
 var Enemy = /** @class */ (function () {
     function Enemy() {
@@ -80,8 +80,9 @@ var Enemy = /** @class */ (function () {
         stroke(this.offset % 100, 100, 80);
         this.y = this.path.calculate(this.x);
         translate(this.x, height - this.y);
-        rotate(-this.path.getAngle(this.x));
-        circle(0, 0, exports.enemyRadius * 2);
+        rotate(this.path.getAngle(this.x));
+        // circle(0, 0, enemyRadius * 2);
+        triangle(-exports.enemyRadius, -exports.enemyRadius, -exports.enemyRadius, exports.enemyRadius, exports.enemyRadius, 0);
         pop();
         this.x += 3;
         if (this.x > width) {
@@ -157,7 +158,7 @@ var GenericPath = /** @class */ (function () {
     function GenericPath() {
     }
     GenericPath.prototype.getAngle = function (x) {
-        return atan(2 / (this.calculate(x - 1) - this.calculate(x + 1))) + 90;
+        return atan((this.calculate(x - 1) - this.calculate(x + 1)) / 2);
     };
     return GenericPath;
 }());
@@ -249,13 +250,66 @@ exports.SinusPath = SinusPath;
 
 /***/ }),
 /* 6 */
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ScoreService = void 0;
+var ScoreService = /** @class */ (function () {
+    function ScoreService() {
+        this._score = 0;
+    }
+    Object.defineProperty(ScoreService.prototype, "score", {
+        get: function () { return this._score; },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(ScoreService.prototype, "highscore", {
+        get: function () {
+            return parseInt(localStorage.getItem('fngame-highscore') || '0');
+        },
+        set: function (score) {
+            localStorage.setItem('fngame-highscore', score.toString());
+        },
+        enumerable: false,
+        configurable: true
+    });
+    ScoreService.prototype.increment = function (n) { this._score += n; };
+    ScoreService.prototype.decrement = function (n) { this._score -= n; };
+    ScoreService.prototype.endGame = function () {
+        var _a;
+        if (this.highscore < this._score)
+            this.highscore = this._score;
+        (_a = document.getElementById('game-over')) === null || _a === void 0 ? void 0 : _a.removeAttribute('hidden');
+        document.getElementById('score').innerText = this._score;
+        document.getElementById('highscore').innerText = this.highscore;
+        noCanvas();
+        noLoop();
+    };
+    Object.defineProperty(ScoreService, "Instance", {
+        get: function () {
+            // If the class hasn't been instantiated, then do it
+            if (!this.singletonInstance)
+                this.singletonInstance = new this();
+            return this.singletonInstance;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return ScoreService;
+}());
+exports.ScoreService = ScoreService;
+
+
+/***/ }),
+/* 7 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Player = exports.playerRadius = void 0;
 var enemy_1 = __webpack_require__(1);
-var score_service_1 = __webpack_require__(7);
+var score_service_1 = __webpack_require__(6);
 var speedLimit = 10;
 exports.playerRadius = 10;
 var healtBarPadding = 10;
@@ -339,59 +393,6 @@ var Player = /** @class */ (function () {
     return Player;
 }());
 exports.Player = Player;
-
-
-/***/ }),
-/* 7 */
-/***/ ((__unused_webpack_module, exports) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ScoreService = void 0;
-var ScoreService = /** @class */ (function () {
-    function ScoreService() {
-        this._score = 0;
-    }
-    Object.defineProperty(ScoreService.prototype, "score", {
-        get: function () { return this._score; },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(ScoreService.prototype, "highscore", {
-        get: function () {
-            return parseInt(localStorage.getItem('fngame-highscore') || '0');
-        },
-        set: function (score) {
-            localStorage.setItem('fngame-highscore', score.toString());
-        },
-        enumerable: false,
-        configurable: true
-    });
-    ScoreService.prototype.increment = function (n) { this._score += n; };
-    ScoreService.prototype.decrement = function (n) { this._score -= n; };
-    ScoreService.prototype.endGame = function () {
-        var _a;
-        if (this.highscore < this._score)
-            this.highscore = this._score;
-        (_a = document.getElementById('game-over')) === null || _a === void 0 ? void 0 : _a.removeAttribute('hidden');
-        document.getElementById('score').innerText = this._score;
-        document.getElementById('highscore').innerText = this.highscore;
-        noCanvas();
-        noLoop();
-    };
-    Object.defineProperty(ScoreService, "Instance", {
-        get: function () {
-            // If the class hasn't been instantiated, then do it
-            if (!this.singletonInstance)
-                this.singletonInstance = new this();
-            return this.singletonInstance;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    return ScoreService;
-}());
-exports.ScoreService = ScoreService;
 
 
 /***/ })

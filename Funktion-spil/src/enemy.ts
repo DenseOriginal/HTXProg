@@ -28,8 +28,14 @@ export class Enemy {
     stroke(this.offset % 100, 100, 80);
     this.y = this.path.calculate(this.x);
     translate(this.x, height - this.y);
-    rotate(-this.path.getAngle(this.x));
-    circle(0, 0, enemyRadius * 2);
+    rotate(this.path.getAngle(this.x));
+    // circle(0, 0, enemyRadius * 2);
+
+    triangle(
+      -enemyRadius, -enemyRadius,
+      -enemyRadius, enemyRadius,
+      enemyRadius, 0
+    );
 
     pop();
 
