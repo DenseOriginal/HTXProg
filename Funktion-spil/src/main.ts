@@ -43,7 +43,7 @@ let enemySpawnTimer = 1500;
 }
 
 // Key shit
-document.addEventListener('keydown', (event) => keyPressed(event.key.toLowerCase()));
+document.addEventListener('keydown', (event) => !event.repeat && keyPressed(event.key.toLowerCase()));
 function keyPressed(key: string) {
 	if(key == " ") {
 		player.usePhysics = true;

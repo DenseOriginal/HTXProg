@@ -43,7 +43,7 @@ window.draw = function () {
     enemySpawnTimer = 800 * Math.pow(0.996, (millis() / 1000)) + 200;
 };
 // Key shit
-document.addEventListener('keydown', function (event) { return keyPressed(event.key.toLowerCase()); });
+document.addEventListener('keydown', function (event) { return !event.repeat && keyPressed(event.key.toLowerCase()); });
 function keyPressed(key) {
     if (key == " ") {
         exports.player.usePhysics = true;
