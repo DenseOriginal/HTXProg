@@ -14,6 +14,7 @@ let enemySpawnTimer = 1500;
 	rectMode(CENTER);
 	angleMode(DEGREES);
 	new Enemy();
+	frameRate(60);
 }
 
 (window as any).draw = () => {

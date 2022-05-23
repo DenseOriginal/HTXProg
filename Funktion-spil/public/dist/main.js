@@ -19,6 +19,7 @@ window.setup = function () {
     rectMode(CENTER);
     angleMode(DEGREES);
     new enemy_1.Enemy();
+    frameRate(60);
 };
 window.draw = function () {
     background(255, 75);
