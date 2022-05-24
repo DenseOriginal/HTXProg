@@ -62,12 +62,19 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Enemy = exports.enemyRadius = void 0;
 var exponential_1 = __webpack_require__(2);
 var linear_1 = __webpack_require__(4);
+var mixed_1 = __webpack_require__(8);
 var sinus_1 = __webpack_require__(5);
 var score_service_1 = __webpack_require__(6);
 exports.enemyRadius = 12.5;
 var Enemy = /** @class */ (function () {
     function Enemy() {
-        this.path = new (random([linear_1.LinearPath, sinus_1.SinusPath, exponential_1.ExponentialPath]))();
+        this.path = new (random([
+            linear_1.LinearPath,
+            sinus_1.SinusPath,
+            exponential_1.ExponentialPath,
+            mixed_1.MixedPath.from([sinus_1.SinusPath, linear_1.LinearPath]),
+            mixed_1.MixedPath.from([sinus_1.SinusPath, sinus_1.SinusPath]),
+        ]))();
         this.x = 0;
         this.y = this.path.calculate(this.x);
         this.offset = frameCount / 3;
@@ -394,6 +401,51 @@ var Player = /** @class */ (function () {
     return Player;
 }());
 exports.Player = Player;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MixedPath = void 0;
+var generic_1 = __webpack_require__(3);
+var MixedPath = /** @class */ (function (_super) {
+    __extends(MixedPath, _super);
+    function MixedPath() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MixedPath.prototype.calculate = function (x) {
+        return this.paths.reduce(function (acc, cur) { return acc += cur.calculate(x); }, 0);
+    };
+    MixedPath.from = function (paths) {
+        return /** @class */ (function (_super) {
+            __extends(class_1, _super);
+            function class_1() {
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.paths = paths.map(function (cur) { return new cur(); });
+                return _this;
+            }
+            return class_1;
+        }(MixedPath));
+    };
+    return MixedPath;
+}(generic_1.GenericPath));
+exports.MixedPath = MixedPath;
 
 
 /***/ })

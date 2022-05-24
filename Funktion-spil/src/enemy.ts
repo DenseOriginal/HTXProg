@@ -2,13 +2,20 @@ import { player } from "./main";
 import { ExponentialPath } from "./paths/exponential";
 import { GenericPath } from "./paths/generic";
 import { LinearPath } from "./paths/linear";
+import { MixedPath } from "./paths/mixed";
 import { SinusPath } from "./paths/sinus";
 import { ScoreService } from "./score.service";
 
 export const enemyRadius = 12.5;
 
 export class Enemy {
-  private path: GenericPath = new (random([LinearPath, SinusPath, ExponentialPath]))();
+  private path: GenericPath = new (random([
+    LinearPath,
+    SinusPath,
+    ExponentialPath,
+    MixedPath.from([SinusPath, LinearPath]),
+    MixedPath.from([SinusPath, SinusPath]),
+  ]))();
   public x = 0;
   public y = this.path.calculate(this.x);
 
