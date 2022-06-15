@@ -1,6 +1,6 @@
 export class BeregningsBoks {
-  public id = (Math.random() + 1).toString(36).substring(7).replace(/[0-9]/g, '');
-  public outputEl;
+  public id: string;
+  public outputEl!: Element;
 
   constructor(
     public pos: { x: number, y: number },
@@ -8,6 +8,7 @@ export class BeregningsBoks {
     public name: string,
     inputs: number,
   ) {
+    this.id = name;
     const template = `
     <div
       class="boks"
@@ -28,19 +29,27 @@ export class BeregningsBoks {
 
     target.innerHTML += template;
 
-    const outputNode = document.querySelector(`#${this.id} > p#output`);
-    if(!outputNode) throw new Error('Can\'t find output node');
-
-    this.outputEl = outputNode;
-
-    // Set the event listener
-    const form: HTMLFormElement | null = document.querySelector(`#${this.id} > form`);
-    if(!form) throw new Error('Can\'t find form');
-    form.addEventListener('submit', this.onSubmit.bind(this));
+    // The elements are not yet in the DOM, so we need to get them again
+    setTimeout(() => {
+      const outputNode = document.querySelector(`#${this.id} > p#output`);
+      if(!outputNode) throw new Error('Can\'t find output node');
+  
+      this.outputEl = outputNode;
+  
+      // Set the event listener
+      const form: HTMLFormElement | null = document.querySelector(`#${this.id} > form`);
+      if(!form) throw new Error('Can\'t find form');
+      console.log(form);
+      
+      form.addEventListener('submit', this.onSubmit.bind(this));
+    }, 10);
   }
 
   onSubmit(e: Event) {
     e.preventDefault();
+
+    console.log(e);
+    
 
     const inputs = document.querySelectorAll<HTMLInputElement>(`#${this.id} > form > input`);
     let sum = 0;

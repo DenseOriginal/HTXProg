@@ -10,27 +10,33 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.BeregningsBoks = void 0;
 var BeregningsBoks = /** @class */ (function () {
     function BeregningsBoks(pos, backgroundColor, name, inputs) {
+        var _this = this;
         this.pos = pos;
         this.backgroundColor = backgroundColor;
         this.name = name;
-        this.id = (Math.random() + 1).toString(36).substring(7).replace(/[0-9]/g, '');
+        this.id = name;
         var template = "\n    <div\n      class=\"boks\"\n      id=\"" + this.id + "\"\n      style=\"background-color: " + backgroundColor + "; top: " + pos.y + "px; left: " + pos.x + "px\"\n    >\n      <p id=\"name\">" + name + "</p>\n      <form>\n        " + generateInputTemplate(inputs) + "\n        <button type=\"submit\">Beregn</button>\n      </form>\n      <p id=\"output\"> </p>\n    </div>\n    ";
         var target = document.getElementById('target');
         if (!target)
             throw new Error('Can\'t find target node');
         target.innerHTML += template;
-        var outputNode = document.querySelector("#" + this.id + " > p#output");
-        if (!outputNode)
-            throw new Error('Can\'t find output node');
-        this.outputEl = outputNode;
-        // Set the event listener
-        var form = document.querySelector("#" + this.id + " > form");
-        if (!form)
-            throw new Error('Can\'t find form');
-        form.addEventListener('submit', this.onSubmit.bind(this));
+        // The elements are not yet in the DOM, so we need to get them again
+        setTimeout(function () {
+            var outputNode = document.querySelector("#" + _this.id + " > p#output");
+            if (!outputNode)
+                throw new Error('Can\'t find output node');
+            _this.outputEl = outputNode;
+            // Set the event listener
+            var form = document.querySelector("#" + _this.id + " > form");
+            if (!form)
+                throw new Error('Can\'t find form');
+            console.log(form);
+            form.addEventListener('submit', _this.onSubmit.bind(_this));
+        }, 10);
     }
     BeregningsBoks.prototype.onSubmit = function (e) {
         e.preventDefault();
+        console.log(e);
         var inputs = document.querySelectorAll("#" + this.id + " > form > input");
         var sum = 0;
         inputs.forEach(function (inp) { return sum += Number(inp.value); });
