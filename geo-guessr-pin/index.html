@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+</head>
+<body>
+  <div class="row">
+    <button onclick="dostuff('on')">On</button>
+    <button onclick="dostuff('off')">Off</button>
+  </div>
+  <div class="row">
+    <button onclick="dostuff('blinking/on')">Blinking On</button>
+    <button onclick="dostuff('blinking/off')">Blinking Off</button>
+  </div>
+
+  <script>
+    function dostuff(t) {
+      fetch(`http://192.168.190.242/${t}`, {
+        mode: 'no-cors'
+      }).catch(() => {})
+    }
+  </script>
+</body>
+</html>
