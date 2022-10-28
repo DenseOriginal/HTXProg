@@ -1,9 +1,10 @@
 import mysql.connector
 
 mydb = mysql.connector.connect(
-  host="localhost",
+  host="4.tcp.eu.ngrok.io",
+  port="18754",
   user="root",
-  password="test1234",
+  password="root",
   database="mysql"
 );
 

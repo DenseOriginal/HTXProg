@@ -2,10 +2,15 @@ import { createConnection } from "mysql2";
 import { faker } from '@faker-js/faker';
 
 const connection = createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'test1234',
-  database: 'mysql'
+  // host: 'localhost',
+  // user: 'root',
+  // password: 'test1234',
+  // database: 'mysql'
+  host: "4.tcp.eu.ngrok.io",
+  port: 18754,
+  user: "root",
+  password: "root",
+  database: "mysql"
 });
 
 connection.connect();

@@ -2,9 +2,10 @@ import mysql.connector
 from time import time
 
 mydb = mysql.connector.connect(
-  host="localhost",
+  host="4.tcp.eu.ngrok.io",
+  port="18754",
   user="root",
-  password="test1234",
+  password="root",
   database="mysql"
 );
 
@@ -13,7 +14,7 @@ mycursor = mydb.cursor()
 tic = time()
 mycursor.execute("""
   SELECT * FROM users
-  WHERE age > 50 AND age < 60
+  WHERE age BETWEEN 50 AND 60
   AND favorite_color = 'yellow'
   AND favorite_genre = 'Pop';
 """)

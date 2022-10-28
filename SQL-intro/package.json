@@ -12,7 +12,9 @@
   "dependencies": {
     "@faker-js/faker": "^7.5.0",
     "@types/mysql": "^2.15.21",
+    "@types/prompt": "^1.1.4",
     "mysql": "^2.18.1",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "prompt": "^1.3.0"
   }
 }
