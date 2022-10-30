@@ -7,3 +7,6 @@
 [submodule "fantastiske-funktioner"]
 	path = fantastiske-funktioner
 	url = https://github.com/DenseOriginal/fantastiske-funktioner
+[submodule "DatabaseGame"]
+	path = DatabaseGame
+	url = https://github.com/DenseOriginal/DatabaseGame
