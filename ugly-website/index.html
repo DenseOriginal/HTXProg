@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello world</title>
+    <link href="https://fonts.cdnfonts.com/css/sans-comic-sans" rel="stylesheet">
+    <style class="hidden">
+        * {
+            box-sizing: border-box;
+            font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+        }
+
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            min-height: 100vh;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+
+        body {
+            padding-bottom: 150px;
+            background-image: url("bg.png");
+            background-repeat: repeat;
+        }
+
+        body>p,
+        body>a {
+            color: greenyellow;
+        }
+
+        script:not(.hidden),
+        style:not(.hidden) {
+            display: block;
+            white-space: break-spaces;
+        }
+
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .center+.center {
+            margin-top: 3rem;
+        }
+
+        .center-pic {
+            width: min(100%, 500px);
+        }
+
+        .rotate {
+            animation: rotate 2s infinite linear;
+        }
+
+        .explosion {
+            height: min(100%, 400px);
+            position: absolute;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .footer {
+            content: "";
+            width: 100%;
+            height: 100px;
+            position: fixed;
+            bottom: -5px;
+            left: 0;
+            background-image: url("./flame.gif");
+            background-repeat: repeat-x;
+            background-size: contain;
+        }
+
+        h2 {
+            text-align: center;
+            width: 100%;
+            text-align: center;
+            color: yellow;
+        }
+
+        .buttons {
+            max-width: 80%;
+            background-color: red;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1rem;
+            border: 10px dashed blue;
+        }
+
+        iframe {
+            width: 80%;
+            height: 500px;
+        }
+
+        .modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.886);
+        }
+
+        .modal .content {
+            padding: 1rem;
+            background-color: black;
+        }
+
+        .wrong .content {
+            background-color: red;
+        }
+
+        .correct .content {
+            background-color: green;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .box {
+            border: 3px grey inset;
+            width: fit-content;
+            padding: 4px 16px;
+            margin: 0 8px;
+        }
+
+        .box.b1 {
+            background-color: orange;
+        }
+
+        .box.b2 {
+            background-color: aquamarine;
+        }
+
+        .box.b3 {
+            background-color: crimson;
+        }
+
+        .my-0 {
+            margin: 0;
+        }
+
+        .green {
+            color: greenyellow;
+        }
+
+        .darkgoldenrod {
+            color: darkgoldenrod;
+        }
+
+        .offset-left-500 {
+            width: min(100%, 500px);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .left {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .welcome-text {
+            font-weight: bolder;
+            text-transform: capitalize;
+            color: lavender;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box b1">
+        <style>
+            .very-cool {
+                color: red;
+                transform: rotate(23rad);
+                width: fit-content;
+            }
+        </style>
+
+        <p class="very-cool">Hello world</p>
+    </div>
+
+    <h2>welcome to my awesome site</h2>
+
+    <div class="offset-left-500">
+        <div class="box b2">
+            <p>You can do meny very cool things here</p>
+            <ul>
+                <li>Not cook</li>
+                <li>Pop pills</li>
+                <li>Lay around</li>
+                <li>Suck dick</li>
+                <li>Eat hot <span style="color: chocolate;">chip</span></li>
+                <li>Lie</li>
+            </ul>
+        </div>
+    </div>
+
+    <p class="my-0">My favorite video: <a href="https://youtu.be/R_FQU4KzN7A" class="green">Link</a></p>
+    <p class="my-0">Worthy mentions</p>
+    <ul class="green">
+        <li><a href="https://youtu.be/Kl3H4vMqYNo" class="darkgoldenrod">https://youtu.be/Kl3H4vMqYNo</a></li>
+    </ul>
+
+    <div class="left">
+        <div class="box b3" style="width: min(100%, 600px);">
+            <p class="welcome-text">Hello Web Surfer and Welcome To my Homepage, As you already know My name is Danny
+                and I am 16 year old, From Ramona California (by SanDiego). Thank you for Visiting my page, I hope you
+                take the time to sign my Guestbook, as I will do the same for you. Through your Travels you will Find
+                this page to be very useful as well as entertaining, I Can help you with html and Java, if you have any
+                Questions, I have a mesage Board. HAVE FUN! </p>
+        </div>
+    </div>
+
+    <div class="center">
+        <img id="" class="rotate center-pic" src="./lahvig.png">
+        <img class="center-pic explosion" src="explosion.gif">
+    </div>
+
+    <div class="center">
+        <div class="buttons">
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+            <button onclick="alert('boom')">Explode</button>
+        </div>
+    </div>
+
+    <div class="center">
+        <form action="./index.html" method="get">
+            <input type="text" placeholder="secret" name="secret" id="secret">
+            <button type="submit">check</button>
+        </form>
+    </div>
+
+    <div class="footer"></div>
+
+    <div id="secret-wrong" class="modal wrong hidden">
+        <div class="content">
+            <p>Fuck dig der var forkert</p>
+        </div>
+    </div>
+
+    <div id="secret-correct" class="modal correct hidden">
+        <div class="content">
+            <p>Yaaaay velkommen til min hemmelige klub</p>
+            <a contenteditable="false" href="https://youtu.be/dQw4w9WgXcQ">Klub</a>
+        </div>
+    </div>
+
+    <script class="hidden">
+        // Ignore this :)
+        var _cs=['zone','der','t','_5E','-wr',"&",'4n','g','sec','hi','hid','den','Id','n','ec','er','-c','dd','Ele','orr','j}','dde',"pop",'while',"for",'5_','AK','K{','en','wr','time','ret','t-','on','re',"&","zone","ss","ve",'%',"sLi","d",'time',"tEl","yI","men","tB","Li","em","en","get","le","ar",'math',"t","st","dow","ge","tBy","tE",'Id',"By",'b64',"Id",'-',"Lis","se","get","as","cl","add",'loc',"ch","cla","mo",'1024',"time","re"]; const _g0 = new URLSearchParams(location[_cs[66]+_cs[52]+_cs[72]]); const _g1 = _g0[_cs[50]](_cs[8]+_cs[31]); if (_g1 == _cs[26]+_cs[27]+_cs[6]+_cs[1]+_cs[25]+_cs[15]+_cs[3]+_cs[20]) { document[_cs[57]+_cs[59]+_cs[51]+_cs[45]+_cs[58]+_cs[63]](_cs[8]+_cs[31]+_cs[16]+_cs[19]+_cs[14]+_cs[2])[_cs[73]+_cs[37]+_cs[65]+_cs[54]][_cs[77]+_cs[74]+_cs[38]](_cs[9]+_cs[21]+_cs[13]); } else if (_g1) { document[_cs[57]+_cs[43]+_cs[48]+_cs[49]+_cs[46]+_cs[44]+_cs[41]](_cs[8]+_cs[31]+_cs[4]+_cs[33]+_cs[7])[_cs[69]+_cs[68]+_cs[40]+_cs[55]][_cs[77]+_cs[74]+_cs[38]](_cs[9]+_cs[17]+_cs[28]); setTimeout(() => { document[_cs[57]+_cs[59]+_cs[51]+_cs[45]+_cs[46]+_cs[44]+_cs[41]](_cs[8]+_cs[34]+_cs[32]+_cs[29]+_cs[33]+_cs[7])[_cs[73]+_cs[37]+_cs[47]+_cs[55]][_cs[70]](_cs[10]+_cs[11]); }, 5000); }
+    </script>
+</body>
+
+</html>
