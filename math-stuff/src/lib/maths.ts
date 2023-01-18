@@ -12,7 +12,7 @@ export class Maths {
     }
 
     public max() {
-        return this.numbers.at(-1) as number;
+        return this.numbers[this.numbers.length - 1] as number;
     }
 
     // Print all the stuff that doesnt require input
@@ -67,7 +67,7 @@ export class Maths {
             this.fraktil(0.25),
             this.median(),
             this.fraktil(0.75),
-            this.numbers.at(-1) as number
+            this.numbers[this.numbers.length - 1] as number
         ];
     }
 
