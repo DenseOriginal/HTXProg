@@ -143,7 +143,7 @@
             border: 3px grey inset;
             width: fit-content;
             padding: 4px 16px;
-            margin: 0 8px;
+            margin: 1rem 8px;
         }
 
         .box.b1 {
@@ -156,6 +156,10 @@
 
         .box.b3 {
             background-color: crimson;
+        }
+
+        .box.b4 {
+            background-color: darkslateblue;
         }
 
         .my-0 {
@@ -187,10 +191,85 @@
             text-transform: capitalize;
             color: lavender;
         }
+
+        .forum {
+            margin-top: 3rem;
+            width: min(600px, 95%);
+        }
+
+        .forum textarea {
+            width: 100%;
+        }
+
+        .message {
+            background-color: white;
+            border: 3px inset gray;
+        }
+
+        .message+.message {
+            margin-top: 10px;
+        }
+
+        .message p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .message .content {
+            padding-left: 1rem;
+        }
+
+        .message .timestamp {
+            font-size: 10px;
+            color: gray;
+        }
+
+        .message .replies {
+            list-style: none;
+            padding-left: 20px;
+            margin: 0;
+            margin-top: 10px;
+        }
     </style>
+    <script src="./message-board.js" defer></script>
 </head>
 
 <body>
+    <h2>welcome to my awesome site</h2>
+
+    <div class="left">
+        <div class="box b3" style="width: min(100%, 600px);">
+            <p class="welcome-text">Hello Web Surfer and Welcome To my Homepage, As you already know My name is Danny
+                and I am 16 year old, From Ramona California (by SanDiego). Thank you for Visiting my page, I hope you
+                take the time to sign my Guestbook, as I will do the same for you. Through your Travels you will Find
+                this page to be very useful as well as entertaining, I Can help you with html and Java, if you have any
+                Questions, I have a mesage Board. HAVE FUN! </p>
+        </div>
+    </div>
+
+    <div class="center">
+        <div class="box b4 forum">
+            <h3>Message board</h3>
+            <form id="message-board-form">
+                <textarea name="message" id="message" placeholder="Your message..."></textarea>
+                <button type="submit">Submit</button>
+            </form>
+
+            <hr>
+
+            <div id="message-container">
+                <div class="message" id="obama">
+                    <p class="author">👤 Obama</p>
+                    <p class="content">This is obama certified</p>
+                    <p class="timestamp">16/05/2020</p>
+                    <ul class="replies">
+                        <li><strong>Joe</strong>: Hello obamna</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="box b1">
         <style>
             .very-cool {
@@ -202,8 +281,6 @@
 
         <p class="very-cool">Hello world</p>
     </div>
-
-    <h2>welcome to my awesome site</h2>
 
     <div class="offset-left-500">
         <div class="box b2">
@@ -224,16 +301,6 @@
     <ul class="green">
         <li><a href="https://youtu.be/Kl3H4vMqYNo" class="darkgoldenrod">https://youtu.be/Kl3H4vMqYNo</a></li>
     </ul>
-
-    <div class="left">
-        <div class="box b3" style="width: min(100%, 600px);">
-            <p class="welcome-text">Hello Web Surfer and Welcome To my Homepage, As you already know My name is Danny
-                and I am 16 year old, From Ramona California (by SanDiego). Thank you for Visiting my page, I hope you
-                take the time to sign my Guestbook, as I will do the same for you. Through your Travels you will Find
-                this page to be very useful as well as entertaining, I Can help you with html and Java, if you have any
-                Questions, I have a mesage Board. HAVE FUN! </p>
-        </div>
-    </div>
 
     <div class="center">
         <img id="" class="rotate center-pic" src="./lahvig.png">
@@ -297,7 +364,7 @@
 
     <script class="hidden">
         // Ignore this :)
-        var _cs=['zone','der','t','_5E','-wr',"&",'4n','g','sec','hi','hid','den','Id','n','ec','er','-c','dd','Ele','orr','j}','dde',"pop",'while',"for",'5_','AK','K{','en','wr','time','ret','t-','on','re',"&","zone","ss","ve",'%',"sLi","d",'time',"tEl","yI","men","tB","Li","em","en","get","le","ar",'math',"t","st","dow","ge","tBy","tE",'Id',"By",'b64',"Id",'-',"Lis","se","get","as","cl","add",'loc',"ch","cla","mo",'1024',"time","re"]; const _g0 = new URLSearchParams(location[_cs[66]+_cs[52]+_cs[72]]); const _g1 = _g0[_cs[50]](_cs[8]+_cs[31]); if (_g1 == _cs[26]+_cs[27]+_cs[6]+_cs[1]+_cs[25]+_cs[15]+_cs[3]+_cs[20]) { document[_cs[57]+_cs[59]+_cs[51]+_cs[45]+_cs[58]+_cs[63]](_cs[8]+_cs[31]+_cs[16]+_cs[19]+_cs[14]+_cs[2])[_cs[73]+_cs[37]+_cs[65]+_cs[54]][_cs[77]+_cs[74]+_cs[38]](_cs[9]+_cs[21]+_cs[13]); } else if (_g1) { document[_cs[57]+_cs[43]+_cs[48]+_cs[49]+_cs[46]+_cs[44]+_cs[41]](_cs[8]+_cs[31]+_cs[4]+_cs[33]+_cs[7])[_cs[69]+_cs[68]+_cs[40]+_cs[55]][_cs[77]+_cs[74]+_cs[38]](_cs[9]+_cs[17]+_cs[28]); setTimeout(() => { document[_cs[57]+_cs[59]+_cs[51]+_cs[45]+_cs[46]+_cs[44]+_cs[41]](_cs[8]+_cs[34]+_cs[32]+_cs[29]+_cs[33]+_cs[7])[_cs[73]+_cs[37]+_cs[47]+_cs[55]][_cs[70]](_cs[10]+_cs[11]); }, 5000); }
+        var _cs = ['zone', 'der', 't', '_5E', '-wr', "&", '4n', 'g', 'sec', 'hi', 'hid', 'den', 'Id', 'n', 'ec', 'er', '-c', 'dd', 'Ele', 'orr', 'j}', 'dde', "pop", 'while', "for", '5_', 'AK', 'K{', 'en', 'wr', 'time', 'ret', 't-', 'on', 're', "&", "zone", "ss", "ve", '%', "sLi", "d", 'time', "tEl", "yI", "men", "tB", "Li", "em", "en", "get", "le", "ar", 'math', "t", "st", "dow", "ge", "tBy", "tE", 'Id', "By", 'b64', "Id", '-', "Lis", "se", "get", "as", "cl", "add", 'loc', "ch", "cla", "mo", '1024', "time", "re"]; const _g0 = new URLSearchParams(location[_cs[66] + _cs[52] + _cs[72]]); const _g1 = _g0[_cs[50]](_cs[8] + _cs[31]); if (_g1 == _cs[26] + _cs[27] + _cs[6] + _cs[1] + _cs[25] + _cs[15] + _cs[3] + _cs[20]) { document[_cs[57] + _cs[59] + _cs[51] + _cs[45] + _cs[58] + _cs[63]](_cs[8] + _cs[31] + _cs[16] + _cs[19] + _cs[14] + _cs[2])[_cs[73] + _cs[37] + _cs[65] + _cs[54]][_cs[77] + _cs[74] + _cs[38]](_cs[9] + _cs[21] + _cs[13]); } else if (_g1) { document[_cs[57] + _cs[43] + _cs[48] + _cs[49] + _cs[46] + _cs[44] + _cs[41]](_cs[8] + _cs[31] + _cs[4] + _cs[33] + _cs[7])[_cs[69] + _cs[68] + _cs[40] + _cs[55]][_cs[77] + _cs[74] + _cs[38]](_cs[9] + _cs[17] + _cs[28]); setTimeout(() => { document[_cs[57] + _cs[59] + _cs[51] + _cs[45] + _cs[46] + _cs[44] + _cs[41]](_cs[8] + _cs[34] + _cs[32] + _cs[29] + _cs[33] + _cs[7])[_cs[73] + _cs[37] + _cs[47] + _cs[55]][_cs[70]](_cs[10] + _cs[11]); }, 5000); }
     </script>
 </body>
 
