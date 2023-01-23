@@ -1,40 +1,40 @@
-function bruteForce(pass: string) {
-    const start = Date.now();
-    const possibleChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let attemptedPass = new Array(pass.length + 1).join('a');
+const possibleChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    while (attemptedPass !== pass) {
-        attemptedPass = nextString(attemptedPass, possibleChars);
+function* iteratePosibilities(chars: string, maxLength = Infinity) {
+    let combi: number[] = [0];
+    const lenOfChars = chars.length;
+
+    while (true && combi.length <= maxLength) {
+        yield combi.map(idx => chars[idx]).join('');
+        combi = incrementList(combi, lenOfChars);
     }
+}
+
+function incrementList(list: number[], base: number) {
+    let carry = true;
+    const incrementedList = list.map(val => {
+        const newVal = carry ? (val + 1) % base : val;
+        carry = carry && newVal == 0;
+        return newVal;
+    });
+
+    if (carry) incrementedList.push(0);
+    return incrementedList;
+}
+
+function timeBruteForce(pass: string): number {
+    const start = Date.now();
+
+    const passIterator = iteratePosibilities(possibleChars);
+    while (passIterator.next().value != pass) { }
 
     const end = Date.now();
-    console.log(`Pass (${pass}) took ${end - start}ms to bruteforce`);
+    return end - start;
 }
 
-function nextString(s: string, possibleChars: string): string {
-    let result = '';
-    let carry = true;
-    for (let i = s.length - 1; i >= 0; i--) {
-        let c = s.charAt(i);
-        let index = possibleChars.indexOf(c);
-        if (carry) {
-            if (index === possibleChars.length - 1) {
-                result = possibleChars[0] + result;
-            } else {
-                result = possibleChars[index + 1] + result;
-                carry = false;
-            }
-        } else {
-            result = c + result;
-        }
-    }
+// console.log(`Time to bruteforce 'Hej': ${timeBruteForce('Hej')} ms`);
+// console.log(`Time to bruteforce 'Hello': ${timeBruteForce('Hello')} ms`);
 
-    if (carry) {
-        result = possibleChars[0] + result;
-    }
-
-    return result;
-}
-
-bruteForce('hej');
-bruteForce('Hello')
+console.log(
+    [...iteratePosibilities("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 4)].join('\n')
+);
