@@ -32,9 +32,6 @@ function timeBruteForce(pass: string): number {
     return end - start;
 }
 
-// console.log(`Time to bruteforce 'Hej': ${timeBruteForce('Hej')} ms`);
-// console.log(`Time to bruteforce 'Hello': ${timeBruteForce('Hello')} ms`);
+console.log(`Time to bruteforce 'Hej': ${timeBruteForce('Hej')} ms`);
+console.log(`Time to bruteforce 'Hello': ${timeBruteForce('Hello')} ms`);
 
-console.log(
-    [...iteratePosibilities("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 4)].join('\n')
-);
