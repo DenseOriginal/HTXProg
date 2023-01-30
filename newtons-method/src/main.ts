@@ -20,12 +20,16 @@ function* newtonsMethod(f: Func, x0: number) {
 	return { root: x, iterations };
 }
 
-const animationOverFrames = 30;
-const zoomScale = 100;
+const button = document.getElementById('solveButton');
+const inputElement = document.getElementById('equation') as HTMLInputElement;
+const x0Input = document.getElementById('x-nul') as HTMLInputElement;
 
-const f: Func = (x: number) => Math.cos(x) - x**3;
-const x0 = 0.5;
-const rootFinder = newtonsMethod(f, x0);
+const animationOverFrames = 30;
+const zoomScale = 10;
+
+let f: Func = (x: number) => Math.cos(x) - x**3;
+let x0 = 0.5;
+let rootFinder = newtonsMethod(f, x0);
 
 let prevRoot = x0;
 let nextRoot = rootFinder.next();
@@ -50,7 +54,7 @@ let nextRoot = rootFinder.next();
 	stroke(0);
 	fill(0, 0, 0, 0);
 	beginShape();
-	for (let x = -10; x < 10; x += 0.01) {
+	for (let x = -(width / 2 / zoomScale); x < (width / 2 / zoomScale); x += 0.01) {
 		vertex(x * zoomScale, -f(x) * zoomScale);
 	}
 	endShape();
@@ -61,17 +65,12 @@ let nextRoot = rootFinder.next();
 	}
 
 	const { root, iterations } = nextRoot.value;
-	const lerpedRoot = lerp(prevRoot, root, (frameCount % animationOverFrames) / animationOverFrames);
 
 	// Draw the root on the graph
 	strokeWeight(4);
-	// stroke(0, 0, 255);
-	// fill(0, 0, 255);
-	// circle(root * zoomScale, -f(root) * zoomScale, 5);
-
-	stroke(255, 0, 0);
-	fill(255, 0, 0);
-	circle((lerpedRoot) * zoomScale, 0, 3);
+	stroke(0, 0, 255);
+	fill(0, 0, 255);
+	circle(root * zoomScale, -f(root) * zoomScale, 3);
 
 	// Print the root and number of iterations
 	fill(0);
@@ -79,3 +78,37 @@ let nextRoot = rootFinder.next();
 	text(`Root: ${root.toFixed(5)}`, 20, 20);
 	text(`Iterations: ${iterations}`, 20, 40);
 };
+
+const mapInputToEquation = (input: string) => {
+    if (!input.includes('=')) return input;
+
+    const [first, second] = input.split('=');
+    return `(${first})-(${second})`;
+}
+
+// Listeners
+button?.addEventListener('click', () => {
+    listener();
+})
+
+inputElement.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        listener();
+    }
+});
+
+function listener() {
+    const input = inputElement.value;
+    if (!input) return alert('Input function');
+	const mappedEquation = mapInputToEquation(input);
+	
+    f = (x: number) => eval(mappedEquation);
+    x0 = Number(x0Input.value || 0);
+	rootFinder = newtonsMethod(f, x0);
+	
+	prevRoot = x0;
+	nextRoot = rootFinder.next();
+	
+    loop();
+}

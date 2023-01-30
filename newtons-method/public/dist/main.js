@@ -58,8 +58,11 @@ function newtonsMethod(f, x0) {
         }
     });
 }
+var button = document.getElementById('solveButton');
+var inputElement = document.getElementById('equation');
+var x0Input = document.getElementById('x-nul');
 var animationOverFrames = 30;
-var zoomScale = 100;
+var zoomScale = 10;
 var f = function (x) { return Math.cos(x) - Math.pow(x, 3); };
 var x0 = 0.5;
 var rootFinder = newtonsMethod(f, x0);
@@ -81,7 +84,7 @@ window.draw = function () {
     stroke(0);
     fill(0, 0, 0, 0);
     beginShape();
-    for (var x = -10; x < 10; x += 0.01) {
+    for (var x = -(width / 2 / zoomScale); x < (width / 2 / zoomScale); x += 0.01) {
         vertex(x * zoomScale, -f(x) * zoomScale);
     }
     endShape();
@@ -90,21 +93,45 @@ window.draw = function () {
         nextRoot = rootFinder.next();
     }
     var _a = nextRoot.value, root = _a.root, iterations = _a.iterations;
-    var lerpedRoot = lerp(prevRoot, root, (frameCount % animationOverFrames) / animationOverFrames);
     // Draw the root on the graph
     strokeWeight(4);
-    // stroke(0, 0, 255);
-    // fill(0, 0, 255);
-    // circle(root * zoomScale, -f(root) * zoomScale, 5);
-    stroke(255, 0, 0);
-    fill(255, 0, 0);
-    circle((lerpedRoot) * zoomScale, 0, 3);
+    stroke(0, 0, 255);
+    fill(0, 0, 255);
+    circle(root * zoomScale, -f(root) * zoomScale, 3);
     // Print the root and number of iterations
     fill(0);
     noStroke();
     text("Root: " + root.toFixed(5), 20, 20);
     text("Iterations: " + iterations, 20, 40);
 };
+var mapInputToEquation = function (input) {
+    if (!input.includes('='))
+        return input;
+    var _a = input.split('='), first = _a[0], second = _a[1];
+    return "(" + first + ")-(" + second + ")";
+};
+// Listeners
+button === null || button === void 0 ? void 0 : button.addEventListener('click', function () {
+    listener();
+});
+inputElement.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        listener();
+    }
+});
+function listener() {
+    var input = inputElement.value;
+    if (!input)
+        return alert('Input function');
+    var mappedEquation = mapInputToEquation(input);
+    f = function (x) { return eval(mappedEquation); };
+    x0 = Number(x0Input.value || 0);
+    rootFinder = newtonsMethod(f, x0);
+    prevRoot = x0;
+    nextRoot = rootFinder.next();
+    loop();
+}
 
 
 /***/ })

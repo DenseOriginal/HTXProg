@@ -9,4 +9,27 @@ body {
     height: 100vh;
     display: grid;
     place-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.inputs {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background-color: #d4d4d4;
+    border-radius: 4px;
+    padding: 8px 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+#zoomSlider {
+    flex-grow: 1;
+    margin-inline: 8px;
 }
