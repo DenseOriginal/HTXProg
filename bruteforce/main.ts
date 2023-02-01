@@ -1,14 +1,7 @@
 const possibleChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-function* iteratePosibilities(chars: string, maxLength = Infinity) {
-    let combi: number[] = [0];
-    const lenOfChars = chars.length;
-
-    while (true && combi.length <= maxLength) {
-        yield combi.map(idx => chars[idx]).join('');
-        combi = incrementList(combi, lenOfChars);
-    }
-}
+const timeAndLog = (pass: string) =>
+    console.log(`Time to bruteforce '${pass}': ${time(timeBruteForce, pass)} ms`);
 
 function incrementList(list: number[], base: number) {
     let carry = true;
@@ -22,16 +15,20 @@ function incrementList(list: number[], base: number) {
     return incrementedList;
 }
 
-function timeBruteForce(pass: string): number {
+function timeBruteForce(pass: string) {
+    let combi: number[] = [];
+    const hashedPass = pass.split('').map(char => possibleChars.indexOf(char)).join(',');
+    while ((combi = incrementList(combi, possibleChars.length)).join(',') != hashedPass) continue;
+}
+
+timeAndLog('Hej');
+timeAndLog('aabj');
+
+function time<T extends (...args: P) => any, P extends Array<unknown>>(f: T, ...args: P) {
     const start = Date.now();
 
-    const passIterator = iteratePosibilities(possibleChars);
-    while (passIterator.next().value != pass) { }
+    f(...args);
 
     const end = Date.now();
     return end - start;
 }
-
-console.log(`Time to bruteforce 'Hej': ${timeBruteForce('Hej')} ms`);
-console.log(`Time to bruteforce 'Hello': ${timeBruteForce('Hello')} ms`);
-
