@@ -1,3 +1,4 @@
 */libraries/
 **/node_modules/
 **/target/
+.env
