@@ -37,7 +37,7 @@ endobj
 /F1 32 0 R
 /F2 36 0 R
 /C0_0 40 0 R
-/F1fd43cbbf-22f9-484f-b371-ee72a3b01ca2 <<
+/F12365bc84-3a69-4855-a1e1-28391b70124f <<
 /BaseFont /Helvetica
 /Encoding /WinAnsiEncoding
 /Name /F1
@@ -48,7 +48,7 @@ endobj
 /XObject <<
 /Image12 49 0 R
 >>
-/ProcSet [ /Text /PDF /ImageC /ImageB /ImageI ]
+/ProcSet [ /ImageB /ImageI /ImageC /Text /PDF ]
 >>
 /Tabs /S
 /Type /Page
@@ -1034,7 +1034,7 @@ W
 n
 1 0 0 1 0 0 cm
 BT
-/F1fd43cbbf-22f9-484f-b371-ee72a3b01ca2 12 Tf
+/F12365bc84-3a69-4855-a1e1-28391b70124f 12 Tf
 14.4 TL
 ET
 1 1 1 rg
@@ -1425,7 +1425,7 @@ endobj
 <<
 /Type /Font
 /Subtype /Type0
-/BaseFont /CCQOMS+Arial
+/BaseFont /OKWAAK+Arial
 /Encoding /Identity-H
 /DescendantFonts [ 41 0 R ]
 /ToUnicode 47 0 R
